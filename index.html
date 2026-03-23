@@ -3,1011 +3,642 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>OS Intelligence | Built for How You Actually Work</title>
+<title>OS Intelligence | Built for Your Business</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #0E0F11;
-    --bg2: #13151A;
-    --bg3: #1A1D24;
-    --steel: #22262F;
-    --border: #2A2F3A;
-    --border2: #363C4A;
-    --orange: #E8590C;
-    --orange-dim: rgba(232,89,12,0.12);
-    --orange-mid: rgba(232,89,12,0.25);
-    --text: #E2E6EF;
-    --text-mid: #8892A4;
-    --text-dim: #4A5160;
-    --white: #F0F3FA;
+    --linen:       #F7F2EA;
+    --parchment:   #EDE5D8;
+    --wheat:       #D4C4A8;
+    --clay:        #8C6A4A;
+    --clay-light:  #A8815E;
+    --clay-pale:   #F0E8DC;
+    --forest:      #2F4035;
+    --forest-mid:  #3D5445;
+    --bark:        #4A3C30;
+    --stone:       #7A6E62;
+    --fog:         #C4BAB0;
   }
-
+ 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
+ 
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    overflow-x: hidden;
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--linen);
+    color: var(--bark);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
   }
-
-  /* ── Grain overlay ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.6;
+ 
+  h1, h2, h3, h4 {
+    font-family: 'Lora', serif;
+    line-height: 1.25;
+    color: var(--forest);
   }
-
-  /* ── Nav ── */
+ 
+  .eyebrow {
+    display: inline-block;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 14px;
+  }
+ 
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 36px; }
+  section { padding: 88px 0; }
+ 
+  hr.divider { border: none; border-top: 1px solid var(--wheat); margin: 0; }
+ 
+  /* NAV */
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 0 40px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(14,15,17,0.92);
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+    background: var(--linen);
+    border-bottom: 1px solid var(--wheat);
+    padding: 0 36px;
   }
-
+ 
+  .nav-inner {
+    max-width: 1060px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 62px;
+  }
+ 
   .nav-logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    letter-spacing: 1px;
-    color: var(--white);
-    text-decoration: none;
-    text-transform: uppercase;
+    font-family: 'Lora', serif; font-size: 18px; font-weight: 700;
+    color: var(--forest); text-decoration: none;
   }
-  .nav-logo span { color: var(--orange); }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
+  .nav-logo span { color: var(--clay); }
+ 
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+ 
   .nav-links a {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    text-decoration: none;
-    transition: color 0.2s;
+    font-size: 14px; font-weight: 600;
+    color: var(--stone); text-decoration: none; transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--orange); }
-
+  .nav-links a:hover { color: var(--clay); }
+ 
   .nav-cta {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--bg);
-    background: var(--orange);
-    padding: 8px 18px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.2s;
+    background: var(--forest) !important; color: var(--linen) !important;
+    padding: 9px 20px; border-radius: 4px;
+    font-size: 13px !important; font-weight: 700 !important;
+    transition: background 0.2s !important;
   }
-  .nav-cta:hover { background: #FF6A1A; }
-
-  /* ── Hero ── */
+  .nav-cta:hover { background: var(--forest-mid) !important; }
+ 
+  /* HERO */
   #hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 40px 80px;
-    position: relative;
-    overflow: hidden;
+    background: var(--parchment);
+    padding: 80px 36px 72px;
+    border-bottom: 1px solid var(--wheat);
   }
-
-  .hero-grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(42,47,58,0.4) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(42,47,58,0.4) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+ 
+  .hero-inner {
+    max-width: 1060px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 300px;
+    gap: 72px; align-items: center;
   }
-
-  .hero-accent-line {
-    position: absolute;
-    top: 0; bottom: 0;
-    left: 40px;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, var(--orange) 30%, var(--orange) 70%, transparent);
-    opacity: 0.4;
+ 
+  .hero-h1 {
+    font-size: clamp(36px, 4.2vw, 54px); font-weight: 700;
+    margin-bottom: 22px; line-height: 1.15; color: var(--forest);
   }
-
-  .hero-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    display: block;
-    width: 32px;
-    height: 1px;
-    background: var(--orange);
-  }
-
-  .hero-headline {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(52px, 8vw, 112px);
-    line-height: 0.92;
-    letter-spacing: -1px;
-    text-transform: uppercase;
-    color: var(--white);
-    max-width: 900px;
-    margin-bottom: 32px;
-  }
-
-  .hero-headline em {
-    font-style: normal;
-    color: var(--orange);
-    display: block;
-  }
-
+  .hero-h1 em { font-style: italic; color: var(--clay); }
+ 
   .hero-sub {
-    font-size: 17px;
-    color: var(--text-mid);
-    max-width: 520px;
-    line-height: 1.7;
-    font-weight: 300;
-    margin-bottom: 40px;
-    border-left: 2px solid var(--border2);
-    padding-left: 20px;
+    font-size: 18px; color: var(--bark);
+    max-width: 520px; margin-bottom: 36px; line-height: 1.75;
   }
-
-  .hero-actions {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-  }
-
+ 
+  .hero-actions { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+ 
   .btn-primary {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--bg);
-    background: var(--orange);
-    padding: 14px 28px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s;
-    display: inline-block;
+    background: var(--forest); color: var(--linen);
+    padding: 13px 26px; border-radius: 4px;
+    text-decoration: none; font-weight: 700; font-size: 15px;
+    transition: background 0.2s;
   }
-  .btn-primary:hover { background: #FF6A1A; transform: translateY(-1px); }
-
+  .btn-primary:hover { background: var(--forest-mid); }
+ 
   .btn-ghost {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-mid);
-    background: transparent;
-    border: 1px solid var(--border2);
-    padding: 14px 28px;
-    text-decoration: none;
-    transition: all 0.2s;
-    display: inline-block;
+    color: var(--clay); text-decoration: none;
+    font-weight: 700; font-size: 15px;
+    border-bottom: 2px solid var(--wheat); padding-bottom: 1px;
+    transition: color 0.2s, border-color 0.2s;
   }
-  .btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
-
-  .hero-stats {
-    position: absolute;
-    right: 40px;
-    bottom: 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    text-align: right;
+  .btn-ghost:hover { color: var(--clay-light); border-color: var(--clay-light); }
+ 
+  .hero-aside {
+    background: var(--linen); border: 1px solid var(--wheat);
+    border-radius: 6px; padding: 26px;
   }
-  .hero-stat-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 42px;
-    color: var(--white);
-    line-height: 1;
+ 
+  .aside-row {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 0; border-bottom: 1px solid var(--fog);
   }
-  .hero-stat-val span { color: var(--orange); }
-  .hero-stat-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-top: 4px;
+  .aside-row:first-of-type { padding-top: 0; }
+  .aside-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+ 
+  .aside-num {
+    font-family: 'Lora', serif; font-size: 26px; font-weight: 700;
+    color: var(--clay); line-height: 1; min-width: 60px;
   }
-
-  /* ── Section base ── */
-  section { padding: 100px 40px; position: relative; }
-
-  .section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--orange);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  .aside-text { font-size: 13px; color: var(--stone); line-height: 1.55; padding-top: 2px; }
+ 
+  /* OUTCOMES */
+  #outcomes { background: var(--linen); }
+ 
+  .section-header { margin-bottom: 48px; }
+  .section-header h2 { font-size: clamp(27px, 3vw, 38px); max-width: 580px; }
+  .section-header h2 em { font-style: italic; color: var(--clay); }
+  .section-header p { margin-top: 12px; font-size: 17px; color: var(--stone); max-width: 520px; }
+ 
+  .outcomes-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; background: var(--wheat);
+    border: 1px solid var(--wheat); border-radius: 6px; overflow: hidden;
   }
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 1px;
-    background: var(--orange);
+ 
+  .outcome-card { background: var(--linen); padding: 30px 26px; }
+  .outcome-icon { font-size: 24px; margin-bottom: 12px; }
+  .outcome-card h3 { font-size: 17px; margin-bottom: 8px; }
+  .outcome-card p { font-size: 14px; color: var(--stone); line-height: 1.65; }
+ 
+  /* SERVICE */
+  #service { background: var(--parchment); }
+ 
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px; background: var(--wheat);
+    border: 1px solid var(--wheat); border-radius: 6px; overflow: hidden;
+    margin-bottom: 52px;
   }
-
-  .section-headline {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: clamp(32px, 5vw, 56px);
-    line-height: 1.05;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-    color: var(--white);
-    max-width: 700px;
-    margin-bottom: 20px;
+ 
+  .compare-col { padding: 34px 30px; background: var(--linen); }
+  .compare-col.featured { background: var(--forest); }
+ 
+  .compare-col-head {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--stone); margin-bottom: 12px;
   }
-
-  .section-headline em {
-    font-style: normal;
-    color: var(--orange);
+  .compare-col.featured .compare-col-head { color: var(--clay-light); }
+ 
+  .compare-col h3 { font-size: 19px; margin-bottom: 18px; color: var(--forest); }
+  .compare-col.featured h3 { color: var(--linen); }
+ 
+  .compare-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+ 
+  .compare-list li {
+    display: flex; gap: 10px;
+    font-size: 14px; color: var(--stone); line-height: 1.55;
   }
-
-  /* ── Problem section ── */
-  #problem { background: var(--bg2); border-top: 1px solid var(--border); }
-
-  .problem-body {
-    font-size: 17px;
-    color: var(--text-mid);
-    max-width: 640px;
-    line-height: 1.8;
-    font-weight: 300;
-    margin-bottom: 60px;
+  .compare-col.featured .compare-list li { color: #8DADA0; }
+ 
+  .compare-list li .mk { flex-shrink: 0; font-size: 14px; line-height: 1.6; color: var(--fog); }
+  .compare-col.featured .compare-list li .mk { color: var(--clay-light); }
+ 
+  /* EXAMPLE */
+  .example-box {
+    background: var(--linen); border: 1px solid var(--wheat);
+    border-radius: 6px; overflow: hidden;
   }
-
-  .problem-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-    margin-top: 48px;
+ 
+  .example-top {
+    padding: 22px 30px; border-bottom: 1px solid var(--wheat);
+    display: flex; align-items: center; gap: 12px;
+    background: var(--parchment);
   }
-
-  .problem-stat {
-    padding: 36px 32px;
-    border-right: 1px solid var(--border);
-    position: relative;
+  .example-top h3 { font-size: 19px; }
+ 
+  .example-chip {
+    background: var(--clay-pale); border: 1px solid var(--wheat);
+    border-radius: 3px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--clay); padding: 3px 9px;
   }
-  .problem-stat:last-child { border-right: none; }
-  .problem-stat::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--orange);
-    opacity: 0;
-    transition: opacity 0.3s;
+ 
+  .example-cols { display: grid; grid-template-columns: 1fr 1fr; }
+  .example-col { padding: 26px 30px; }
+  .example-col:first-child { border-right: 1px solid var(--wheat); }
+ 
+  .example-col-head {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--stone); margin-bottom: 16px;
   }
-  .problem-stat:hover::before { opacity: 1; }
-
-  .ps-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 52px;
-    color: var(--orange);
-    line-height: 1;
-    margin-bottom: 8px;
+  .example-col.osi .example-col-head { color: var(--clay); }
+ 
+  .feat-row {
+    display: flex; gap: 10px; margin-bottom: 12px;
+    font-size: 14px; line-height: 1.5; color: var(--stone);
   }
-  .ps-label {
-    font-size: 13px;
-    color: var(--text-mid);
-    line-height: 1.5;
-    font-weight: 400;
+  .feat-row .ic { flex-shrink: 0; }
+  .example-col.osi .feat-row { color: var(--bark); }
+ 
+  /* HOW */
+  #how { background: var(--linen); }
+ 
+  .phases-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; background: var(--wheat);
+    border: 1px solid var(--wheat); border-radius: 6px; overflow: hidden;
+    margin-top: 42px;
   }
-
-  /* ── Approach section ── */
-  #approach { background: var(--bg); }
-
-  .approach-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 60px;
+ 
+  .phase { background: var(--linen); padding: 30px 26px; }
+ 
+  .phase-num {
+    font-family: 'Lora', serif; font-size: 42px; font-weight: 700;
+    color: var(--wheat); line-height: 1; margin-bottom: 12px;
   }
-
-  .approach-intro {
-    font-size: 17px;
-    color: var(--text-mid);
-    max-width: 560px;
-    line-height: 1.8;
-    font-weight: 300;
+ 
+  .phase h3 { font-size: 18px; margin-bottom: 9px; }
+  .phase p { font-size: 14px; color: var(--stone); line-height: 1.65; }
+ 
+  .phase-tag {
+    display: inline-block; margin-top: 16px;
+    background: var(--parchment); border: 1px solid var(--wheat);
+    border-radius: 3px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--stone); padding: 4px 10px;
   }
-
-  .approach-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    background: var(--border);
+ 
+  /* ABOUT */
+  #about { background: var(--parchment); }
+ 
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 340px;
+    gap: 68px; align-items: start;
   }
-
-  .approach-card {
-    background: var(--bg2);
-    padding: 32px;
-    display: flex;
-    gap: 24px;
-    transition: background 0.2s;
-    cursor: default;
+ 
+  .about-body h2 { font-size: clamp(25px, 2.6vw, 36px); margin-bottom: 20px; }
+  .about-body h2 em { font-style: italic; color: var(--clay); }
+ 
+  .about-body p {
+    font-size: 16px; color: var(--bark);
+    margin-bottom: 15px; line-height: 1.8;
   }
-  .approach-card:hover { background: var(--bg3); }
-
-  .ac-number {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 48px;
-    color: var(--border2);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 48px;
-    transition: color 0.2s;
-  }
-  .approach-card:hover .ac-number { color: var(--orange); }
-
-  .ac-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-  .ac-body {
-    font-size: 14px;
-    color: var(--text-mid);
-    line-height: 1.7;
-    font-weight: 300;
-  }
-
-  /* ── Comparison ── */
-  #comparison {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .vs-table {
-    display: grid;
-    grid-template-columns: 1fr 48px 1fr;
-    gap: 0;
-    margin-top: 60px;
-    border: 1px solid var(--border);
-  }
-
-  .vs-col {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .vs-header {
-    padding: 20px 28px;
-    border-bottom: 1px solid var(--border);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  .vs-header.old { color: var(--text-dim); background: var(--bg); }
-  .vs-header.new { color: var(--orange); background: var(--orange-dim); }
-
-  .vs-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-left: 1px solid var(--border);
-    border-right: 1px solid var(--border);
-  }
-  .vs-div-label {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 14px;
-    color: var(--text-dim);
-    writing-mode: vertical-rl;
-    letter-spacing: 3px;
-  }
-
-  .vs-row {
-    padding: 16px 28px;
-    font-size: 14px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    line-height: 1.5;
-    min-height: 56px;
-  }
-  .vs-row:last-child { border-bottom: none; }
-  .vs-row.old { color: var(--text-mid); }
-  .vs-row.old::before { content: '×'; color: var(--text-dim); font-size: 16px; flex-shrink: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; }
-  .vs-row.new { color: var(--text); background: rgba(232,89,12,0.04); }
-  .vs-row.new::before { content: '✓'; color: var(--orange); font-size: 14px; flex-shrink: 0; font-weight: 700; }
-
-  /* ── Who we serve ── */
-  #serve { background: var(--bg); }
-
-  .serve-body {
-    font-size: 17px;
-    color: var(--text-mid);
-    max-width: 600px;
-    line-height: 1.8;
-    font-weight: 300;
-    margin-bottom: 60px;
-  }
-
-  .serve-pillars {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 60px;
-  }
-
-  .serve-pillar {
-    background: var(--bg2);
-    padding: 40px 32px;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.2s;
-  }
-  .serve-pillar:hover { background: var(--bg3); }
-  .serve-pillar::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--orange);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-  }
-  .serve-pillar:hover::after { transform: scaleX(1); }
-
-  .sp-number {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--orange);
-    letter-spacing: 2px;
-    margin-bottom: 24px;
-  }
-  .sp-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 22px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--white);
-    margin-bottom: 12px;
-  }
-  .sp-body {
-    font-size: 14px;
-    color: var(--text-mid);
-    line-height: 1.7;
-    font-weight: 300;
-  }
-
-  .serve-promise {
-    border: 1px solid var(--border);
-    padding: 40px;
-    background: var(--bg2);
-    display: flex;
-    gap: 40px;
-    align-items: flex-start;
-  }
-
-  .sp-icon {
-    font-size: 36px;
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-
-  .sp-promise-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 24px;
-    text-transform: uppercase;
-    color: var(--white);
-    margin-bottom: 12px;
-  }
-
-  .sp-promise-body {
-    font-size: 15px;
-    color: var(--text-mid);
-    line-height: 1.8;
-    font-weight: 300;
-  }
-
-  /* ── About ── */
-  #about {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-  }
-
-  .about-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-    margin-top: 60px;
-  }
-
-  .about-body {
-    font-size: 16px;
-    color: var(--text-mid);
-    line-height: 1.9;
-    font-weight: 300;
-  }
-
-  .about-body p { margin-bottom: 20px; }
-  .about-body strong { color: var(--text); font-weight: 500; }
-
+  .about-body p strong { color: var(--forest); font-weight: 700; }
+ 
   .about-sig {
-    margin-top: 32px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    margin-top: 26px; padding-top: 20px;
+    border-top: 1px solid var(--wheat);
   }
+ 
   .sig-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-family: 'Lora', serif; font-size: 19px; font-weight: 700;
+    color: var(--forest); margin-bottom: 3px;
   }
-  .sig-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--orange);
-    letter-spacing: 1.5px;
-    margin-top: 2px;
+  .sig-title { font-size: 13px; color: var(--stone); }
+ 
+  .about-cards { display: flex; flex-direction: column; gap: 3px; }
+ 
+  .about-card {
+    background: var(--linen); border: 1px solid var(--wheat);
+    padding: 20px 22px;
   }
-
-  .about-credentials {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
+  .about-card:first-child { border-radius: 6px 6px 0 0; }
+  .about-card:last-child { border-radius: 0 0 6px 6px; }
+ 
+  .about-card-icon { font-size: 19px; margin-bottom: 6px; }
+  .about-card h4 { font-size: 14px; margin-bottom: 5px; color: var(--forest); }
+  .about-card p { font-size: 13px; color: var(--stone); line-height: 1.55; }
+ 
+  /* CTA */
+  #contact {
+    background: var(--forest);
+    padding: 88px 36px;
+    text-align: center;
   }
-
-  .cred-item {
-    background: var(--bg);
-    padding: 24px 28px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
+ 
+  #contact .eyebrow { color: var(--clay-light); }
+ 
+  #contact h2 {
+    font-size: clamp(25px, 3.6vw, 42px);
+    color: var(--linen); margin-bottom: 16px;
+    max-width: 580px; margin-left: auto; margin-right: auto;
+  }
+  #contact h2 em { font-style: italic; color: var(--clay-light); }
+ 
+  #contact p {
+    font-size: 17px; color: #6A8A74;
+    max-width: 440px; margin: 0 auto 32px;
+  }
+ 
+  .cta-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--clay); color: var(--linen);
+    padding: 14px 30px; border-radius: 4px;
+    text-decoration: none; font-size: 16px; font-weight: 700;
     transition: background 0.2s;
   }
-  .cred-item:hover { background: var(--bg3); }
-
-  .cred-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 36px;
-    color: var(--orange);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 80px;
-  }
-
-  .cred-label {
-    font-size: 14px;
-    color: var(--text-mid);
-    line-height: 1.5;
-    font-weight: 300;
-  }
-  .cred-label strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 2px; }
-
-  /* ── CTA ── */
-  #contact {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    text-align: center;
-    padding: 120px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #contact::before {
-    content: 'OS';
-    position: absolute;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: 400px;
-    color: rgba(255,255,255,0.02);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    letter-spacing: -20px;
-    line-height: 1;
-  }
-
-  .cta-headline {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 900;
-    font-size: clamp(36px, 6vw, 72px);
-    text-transform: uppercase;
-    line-height: 1;
-    color: var(--white);
-    margin-bottom: 20px;
-    position: relative;
-  }
-
-  .cta-sub {
-    font-size: 17px;
-    color: var(--text-mid);
-    font-weight: 300;
-    margin-bottom: 48px;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
-    position: relative;
-  }
-
-  .cta-email {
-    display: inline-block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
-    letter-spacing: 1px;
-    color: var(--orange);
-    text-decoration: none;
-    border-bottom: 1px solid var(--orange-mid);
-    padding-bottom: 3px;
-    transition: border-color 0.2s;
-    position: relative;
-  }
-  .cta-email:hover { border-color: var(--orange); }
-
-  /* ── Footer ── */
+  .cta-link:hover { background: var(--clay-light); }
+ 
+  #contact .note { margin-top: 18px; font-size: 13px; color: #3D5848; }
+ 
+  /* FOOTER */
   footer {
-    background: var(--bg2);
-    border-top: 1px solid var(--border);
-    padding: 28px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background: var(--forest);
+    border-top: 1px solid #253028;
+    padding: 20px 36px;
   }
-
+ 
+  .footer-inner {
+    max-width: 1060px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+ 
   .footer-logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-weight: 800;
-    font-size: 15px;
-    letter-spacing: 1px;
-    color: var(--text-dim);
-    text-transform: uppercase;
+    font-family: 'Lora', serif; font-size: 14px;
+    color: #3D5444; text-decoration: none;
   }
-  .footer-logo span { color: var(--orange); }
-
-  .footer-copy {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 1px;
-    color: var(--text-dim);
-  }
-
-  /* ── Divider line ── */
-  .rule {
-    display: block;
-    height: 1px;
-    background: var(--border);
-    margin: 0 40px;
-  }
-
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .fade-up {
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards;
-  }
-
-  .delay-1 { animation-delay: 0.1s; }
-  .delay-2 { animation-delay: 0.25s; }
-  .delay-3 { animation-delay: 0.4s; }
-  .delay-4 { animation-delay: 0.55s; }
-  .delay-5 { animation-delay: 0.7s; }
-
-  /* ── Scrollbar ── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border2); }
-
-  @media (max-width: 768px) {
-    nav { padding: 0 20px; }
-    .nav-links { display: none; }
-    section { padding: 72px 20px; }
-    #hero { padding: 0 20px 72px; }
-    .hero-stats { display: none; }
-    .problem-stats { grid-template-columns: 1fr; }
-    .problem-stat { border-right: none; border-bottom: 1px solid var(--border); }
-    .approach-grid { grid-template-columns: 1fr; }
-    .serve-pillars { grid-template-columns: 1fr; }
-    .about-layout { grid-template-columns: 1fr; gap: 40px; }
-    .vs-table { grid-template-columns: 1fr; }
-    .vs-divider { display: none; }
-    footer { flex-direction: column; gap: 12px; text-align: center; }
-    .serve-promise { flex-direction: column; gap: 20px; }
+  .footer-logo span { color: var(--clay); }
+  footer p { font-size: 13px; color: #304038; }
+ 
+  /* ANIMATIONS */
+  .fade { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade.in { opacity: 1; transform: none; }
+ 
+  /* RESPONSIVE */
+  @media (max-width: 860px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .hero-aside { display: none; }
+    .outcomes-grid { grid-template-columns: 1fr; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .example-cols { grid-template-columns: 1fr; }
+    .example-col:first-child { border-right: none; border-bottom: 1px solid var(--wheat); }
+    .phases-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+    nav .nav-links li:not(:last-child) { display: none; }
   }
 </style>
 </head>
 <body>
-
+ 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">OS<span>.</span>Intelligence</a>
-  <ul class="nav-links">
-    <li><a href="#problem">The Problem</a></li>
-    <li><a href="#approach">Our Approach</a></li>
-    <li><a href="#serve">What We Build</a></li>
-    <li><a href="#about">About</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">Let's Talk</a>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">OS<span>.</span>Intelligence</a>
+    <ul class="nav-links">
+      <li><a href="#outcomes">What You Get</a></li>
+      <li><a href="#service">The Difference</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
+    </ul>
+  </div>
 </nav>
-
+ 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-accent-line"></div>
-
-  <div class="hero-eyebrow fade-up">St. Louis, Missouri · Built for business owners who build things</div>
-
-  <h1 class="hero-headline fade-up delay-1">
-    Your business deserves
-    <em>an operating system.</em>
-    Not someone else's software.
-  </h1>
-
-  <p class="hero-sub fade-up delay-2">
-    Big software left small business behind. We build the technology you actually need — tailored to how you work, not how they think you should.
-  </p>
-
-  <div class="hero-actions fade-up delay-3">
-    <a href="#contact" class="btn-primary">Start a Conversation →</a>
-    <a href="#problem" class="btn-ghost">See the Problem</a>
-  </div>
-
-  <div class="hero-stats fade-up delay-4">
+  <div class="hero-inner">
     <div>
-      <div class="hero-stat-val">10<span>–</span>15<span>%</span></div>
-      <div class="hero-stat-label">Features actually used<br />on enterprise platforms</div>
-    </div>
-    <div>
-      <div class="hero-stat-val"><span>$</span>100K<span>+</span></div>
-      <div class="hero-stat-label">Annual software spend<br />not built for you</div>
-    </div>
-    <div>
-      <div class="hero-stat-val">0</div>
-      <div class="hero-stat-label">Humans you'll reach<br />when something breaks</div>
-    </div>
-  </div>
-</section>
-
-<span class="rule"></span>
-
-<!-- PROBLEM -->
-<section id="problem">
-  <div class="section-label">The Problem</div>
-  <h2 class="section-headline">You're paying enterprise prices for <em>a fraction of the value.</em></h2>
-
-  <p class="problem-body">
-    The software companies you depend on, are racing to add AI bots and cut costs in order to eliminate the humans that you actually want to work with. They've decided your business isn't big enough to warrant real support, real attention, or real partnership. Meanwhile, you're stuck paying for bloated platforms built for companies ten times your size, using maybe 10–15% of what you bought. When something breaks, you get a bot. When you need guidance, you get a knowledge base. When renewal comes around, you get a price increase.
-  </p>
-
-  <div class="problem-stats">
-    <div class="problem-stat">
-      <div class="ps-val">10–15%</div>
-      <div class="ps-label">Average feature utilization by small businesses on enterprise platforms</div>
-    </div>
-    <div class="problem-stat">
-      <div class="ps-val">$100K+</div>
-      <div class="ps-label">Annual investment in software that wasn't built for how you actually work</div>
-    </div>
-    <div class="problem-stat">
-      <div class="ps-val">0</div>
-      <div class="ps-label">Humans you'll talk to when the next thing breaks</div>
-    </div>
-  </div>
-</section>
-
-<!-- APPROACH -->
-<section id="approach">
-  <div class="section-label">A Different Approach</div>
-  <h2 class="section-headline">We don't sell you software.<br /><em>We build your operating system.</em></h2>
-
-  <div class="approach-grid">
-    <p class="approach-intro">
-      OS Intelligence combines deep operational knowledge with modern AI to build solutions that reflect your actual business — not a one-size-fits-all template designed for someone else. We start where most companies won't: by understanding exactly how you work before writing a single line of code.
-    </p>
-
-    <div class="approach-cards">
-      <div class="approach-card">
-        <div class="ac-number">01</div>
-        <div>
-          <div class="ac-title">Built for You</div>
-          <div class="ac-body">No more paying for features you'll never use. We start with your workflows, your pain points, your team and build technology that maps directly to how your business actually operates.</div>
-        </div>
+      <span class="eyebrow">St. Louis, Missouri · Built for business owners who build things</span>
+      <h1 class="hero-h1">Stop fitting your business<br/>into <em>someone else's</em> system.</h1>
+      <p class="hero-sub">
+        The tools you buy to run your business were built for someone else. OS Intelligence works alongside you to build and run the exact system your business needs, so you can focus on running it.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Start a Conversation →</a>
+        <a href="#service" class="btn-ghost">See how it works</a>
       </div>
-      <div class="approach-card">
-        <div class="ac-number">02</div>
-        <div>
-          <div class="ac-title">Built with You</div>
-          <div class="ac-body">You'll never talk to a chatbot. We're a partner, not a vendor. We sit alongside your team, understand the day-to-day, and evolve your system as your business grows.</div>
-        </div>
+    </div>
+    <div class="hero-aside">
+      <span class="eyebrow" style="margin-bottom:16px;">Why this matters</span>
+      <div class="aside-row">
+        <div class="aside-num">10 to 15%</div>
+        <div class="aside-text">of what you pay for in off-the-shelf tools your team actually uses</div>
       </div>
-      <div class="approach-card">
-        <div class="ac-number">03</div>
-        <div>
-          <div class="ac-title">AI That Works for You</div>
-          <div class="ac-body">AI shouldn't just replace your support team. It should give your business the same operational leverage that Fortune 500 companies have, without needing a technology department to manage it.</div>
-        </div>
+      <div class="aside-row">
+        <div class="aside-num">$0</div>
+        <div class="aside-text">in real human support when something breaks — just bots and knowledge bases</div>
+      </div>
+      <div class="aside-row">
+        <div class="aside-num">1 partner</div>
+        <div class="aside-text">who knows your business, answers when you call, and grows with you</div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- COMPARISON -->
-<section id="comparison">
-  <div class="section-label">The Old Way vs. The OS Way</div>
-  <h2 class="section-headline">Two ways to run your <em>technology.</em></h2>
-
-  <div class="vs-table">
-    <div class="vs-col">
-      <div class="vs-header old">Enterprise Software</div>
-      <div class="vs-row old">Bloated platforms built for their biggest customers</div>
-      <div class="vs-row old">AI used to replace human support</div>
-      <div class="vs-row old">Annual price increases that outpace your growth</div>
-      <div class="vs-row old">10–15% feature utilization</div>
-      <div class="vs-row old">Support tickets, knowledge bases, and bots</div>
-      <div class="vs-row old">Your business adapts to their system</div>
+ 
+<hr class="divider" />
+ 
+<!-- OUTCOMES -->
+<section id="outcomes">
+  <div class="container">
+    <div class="section-header fade">
+      <span class="eyebrow">What you actually get</span>
+      <h2>Real changes in how<br/><em>your business runs.</em></h2>
+      <p>Not features. Not demos. Outcomes that show up in your margins, your team's time, and your ability to see what's happening in your business.</p>
     </div>
-    <div class="vs-divider">
-      <div class="vs-div-label">VS</div>
-    </div>
-    <div class="vs-col">
-      <div class="vs-header new">OS Intelligence</div>
-      <div class="vs-row new">Solutions built specifically for your business</div>
-      <div class="vs-row new">AI used to give you operational superpowers</div>
-      <div class="vs-row new">Transparent pricing aligned to your value</div>
-      <div class="vs-row new">100% of what you pay for is relevant to you</div>
-      <div class="vs-row new">A real person who knows your business</div>
-      <div class="vs-row new">Your system reflects how you actually work</div>
-    </div>
-  </div>
-</section>
-
-<!-- WHO WE SERVE -->
-<section id="serve">
-  <div class="section-label">What We Build</div>
-  <h2 class="section-headline">Every business is different.<br /><em>We build like it.</em></h2>
-
-  <p class="serve-body">
-    We don't specialize in an industry. We specialize in understanding yours. Whether you run a 30-person operation or a 300-person one, we build the same way: by sitting down with the people doing the work and building technology that fits how they actually operate. Not the other way around.
-  </p>
-
-  <div class="serve-pillars">
-    <div class="serve-pillar">
-      <div class="sp-number">01 / OPERATIONS</div>
-      <div class="sp-title">Operational Systems</div>
-      <div class="sp-body">Workflow automation, document management, job tracking, and process tools that eliminate the manual overhead eating into your margins and your team's time.</div>
-    </div>
-    <div class="serve-pillar">
-      <div class="sp-number">02 / FINANCE</div>
-      <div class="sp-title">Financial Integration</div>
-      <div class="sp-body">Seamless connections between what happens in the field or on the floor and what shows up in your books. No more double entry. No more reconciliation nightmares.</div>
-    </div>
-    <div class="serve-pillar">
-      <div class="sp-number">03 / INTELLIGENCE</div>
-      <div class="sp-title">Business Intelligence</div>
-      <div class="sp-body">Reporting, dashboards, and AI tools that give you the visibility to make faster, better decisions without needing a data analyst on staff.</div>
-    </div>
-  </div>
-
-  <div class="serve-promise">
-    <div class="sp-icon">🤝</div>
-    <div>
-      <div class="sp-promise-title">One Real Partner. No Tickets. No Bots.</div>
-      <div class="sp-promise-body">Every engagement starts with a conversation, not a demo. We learn how your business works before we build anything. And when you need us after go-live, you'll reach a real person who already knows your system. That's not a feature. That's a promise.</div>
+    <div class="outcomes-grid fade">
+      <div class="outcome-card">
+        <div class="outcome-icon">⏱</div>
+        <h3>Time back for your team</h3>
+        <p>When the tools match how your people actually work, the manual overhead disappears. Less chasing down information. Less double entry. Less rework.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">📋</div>
+        <h3>Visibility into your operation</h3>
+        <p>Know what's happening across your jobs, your finances, and your team without pulling it from five different places or waiting until month-end to find out.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">💰</div>
+        <h3>Margins you can defend</h3>
+        <p>Hidden cost overruns, billing delays, and approval bottlenecks eat margin silently. A system built for your operation surfaces these problems before they compound.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">🤝</div>
+        <h3>A partner, not a vendor</h3>
+        <p>One person who knows your business, answers when you call, and evolves the system as you grow. No tickets. No support queue. No getting passed around.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">📈</div>
+        <h3>The leverage bigger companies have</h3>
+        <p>Large companies run on custom-built internal tools that smaller businesses can't replicate on their own. Now you can have that same advantage without a full technology team.</p>
+      </div>
+      <div class="outcome-card">
+        <div class="outcome-icon">🏗</div>
+        <h3>A system that grows with you</h3>
+        <p>Off-the-shelf tools are built for a version of your business that doesn't exist. Yours is built from the ground up for how you work today and where you're headed.</p>
+      </div>
     </div>
   </div>
 </section>
-
+ 
+<hr class="divider" />
+ 
+<!-- SERVICE DIFFERENCE -->
+<section id="service">
+  <div class="container">
+    <div class="section-header fade">
+      <span class="eyebrow">A service, not a product</span>
+      <h2>Every tool you buy was built<br/><em>for someone else's business.</em></h2>
+      <p>The companies behind the tools you use today built one product for thousands of customers. That means you spend your time adapting to their system instead of the other way around.</p>
+    </div>
+ 
+    <div class="compare-grid fade">
+      <div class="compare-col">
+        <div class="compare-col-head">What you buy today</div>
+        <h3>Off-the-shelf tools</h3>
+        <ul class="compare-list">
+          <li><span class="mk">✗</span>Built for the average customer in your industry, not you specifically</li>
+          <li><span class="mk">✗</span>You adapt your workflows to fit what the product allows</li>
+          <li><span class="mk">✗</span>Pay for capabilities you'll never use</li>
+          <li><span class="mk">✗</span>Support is automated, slow, and generic</li>
+          <li><span class="mk">✗</span>Annual price increases with no corresponding value to your business</li>
+          <li><span class="mk">✗</span>Roadmap decisions made for their biggest customers, not you</li>
+        </ul>
+      </div>
+      <div class="compare-col featured">
+        <div class="compare-col-head">What OS Intelligence builds</div>
+        <h3>Your operating system</h3>
+        <ul class="compare-list">
+          <li><span class="mk">✓</span>Built from scratch around your specific workflows and team</li>
+          <li><span class="mk">✓</span>The system fits your operation, not the other way around</li>
+          <li><span class="mk">✓</span>You pay only for what your business actually needs</li>
+          <li><span class="mk">✓</span>One partner who knows your system and answers directly</li>
+          <li><span class="mk">✓</span>Transparent pricing: a fixed build fee and a monthly partnership</li>
+          <li><span class="mk">✓</span>System evolves as your business does, on your timeline</li>
+        </ul>
+      </div>
+    </div>
+ 
+    <div class="example-box fade">
+      <div class="example-top">
+        <h3>A real-world example</h3>
+        <span class="example-chip">Construction · $30M Revenue</span>
+      </div>
+      <div class="example-cols">
+        <div class="example-col">
+          <div class="example-col-head">What you get with Procore or Buildertrend</div>
+          <div class="feat-row"><span class="ic">✗</span>A platform built for every type of contractor, regardless of how you actually work</div>
+          <div class="feat-row"><span class="ic">✗</span>Dozens of modules (estimating, scheduling, RFIs, submittals) that most of your team will never touch</div>
+          <div class="feat-row"><span class="ic">✗</span>Months of setup, training, and change management to get your team using it</div>
+          <div class="feat-row"><span class="ic">✗</span>$20K to $50K or more per year with support routed through a ticketing system</div>
+          <div class="feat-row"><span class="ic">✗</span>When your workflow doesn't match the product, you change your workflow</div>
+        </div>
+        <div class="example-col osi">
+          <div class="example-col-head">What OS Intelligence builds for you</div>
+          <div class="feat-row"><span class="ic">✓</span>A job tracking and billing system built around how your PMs and field crews actually work</div>
+          <div class="feat-row"><span class="ic">✓</span>Only the capabilities your operation needs: job status, daily logs, change orders, and invoicing</div>
+          <div class="feat-row"><span class="ic">✓</span>Your team is using it within weeks because it matches what they already do</div>
+          <div class="feat-row"><span class="ic">✓</span>A fixed build cost plus a monthly partnership with one person who knows your system</div>
+          <div class="feat-row"><span class="ic">✓</span>When your operation evolves, the system evolves with it. Not on their roadmap. On yours.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<hr class="divider" />
+ 
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="section-header fade">
+      <span class="eyebrow">How it works</span>
+      <h2>Simple process.<br/><em>Real results.</em></h2>
+      <p>No lengthy proposals. No bloated statements of work. We start with a conversation and move from there.</p>
+    </div>
+    <div class="phases-grid fade">
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <h3>Discover</h3>
+        <p>Before we build anything, we learn your business. How your team works, where the friction is, what you wish you could see every day. This shapes everything that follows.</p>
+        <span class="phase-tag">No cost · No commitment</span>
+      </div>
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <h3>Build</h3>
+        <p>We build your system with you, showing you progress, incorporating your feedback, and making sure what we're building actually fits how you operate. Fixed-fee engagement.</p>
+        <span class="phase-tag">Fixed fee · Clear scope</span>
+      </div>
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <h3>Operate</h3>
+        <p>We don't hand you something and disappear. We stay on as your partner, maintaining the system, supporting your team, and evolving it as your business grows.</p>
+        <span class="phase-tag">Monthly retainer · One partner</span>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<hr class="divider" />
+ 
 <!-- ABOUT -->
 <section id="about">
-  <div class="section-label">Who We Are</div>
-  <h2 class="section-headline">Midwest roots.<br /><em>Enterprise experience.</em><br />Small business heart.</h2>
-
-  <div class="about-layout">
-    <div>
+  <div class="container">
+    <div class="about-grid fade">
       <div class="about-body">
-        <p>I grew up in Southwest Missouri around people who <strong>built things</strong>: businesses, buildings, communities. I spent 12+ years in enterprise technology leadership, watching from the inside as software companies systematically deprioritized the small businesses that helped build them.</p>
-
-        <p>I sat in boardrooms where decisions were made to automate support, raise prices, and sunset the features that smaller customers relied on. I watched good business owners get squeezed by tools that no longer worked for them, with no real alternative.</p>
-
-        <p>OS Intelligence exists because I believe the most impactful thing AI can do for small business isn't <strong>replacing your people</strong>. It's giving you the tools to compete without needing a technology team to run them. We build with you, not above you. And we do it with the same work ethic the Midwest has always run on.</p>
-      </div>
-
-      <div class="about-sig">
-        <div style="width: 2px; height: 48px; background: var(--orange); flex-shrink: 0;"></div>
-        <div>
-          <div class="sig-name">Brent</div>
-          <div class="sig-title">Founder, OS Intelligence · St. Louis, MO</div>
+        <span class="eyebrow">About Us</span>
+        <h2>Built for businesses that are getting <em>left behind by modern tech.</em></h2>
+        <p>I've spent the last 15 years in enterprise technology, helping build and scale companies from early stage to billion-dollar outcomes. I've been in the room where decisions are made to automate support, increase pricing, and prioritize only the largest customers.</p>
+        <p>That model works for enterprise. <strong>It breaks small and mid-sized businesses.</strong></p>
+        <p>If you're not spending $100K or more a year, you're not getting real support. You're getting a login and a queue. And the reality is, those dollars matter more to your business than they ever will to those vendors.</p>
+        <p>At the same time, the pace of technology is accelerating. AI, automation, integrations, data. It's creating massive opportunity, but also widening the gap between companies with dedicated IT teams and those without. Most small businesses are being forced to figure this out on their own.</p>
+        <p><strong>That's the problem. OS Intelligence is the answer.</strong></p>
+        <p>We take the same principles, tools, and strategies used inside high-growth technology companies and apply them in a way that actually works for your business. No bloated tech stacks. No "figure it out yourself" platforms. No support tickets that go nowhere.</p>
+        <p>Instead, we act as your operating partner. We design, implement, and manage the systems your business runs on, tailored to how you actually operate. Human-first, practical, and built to drive outcomes, not just adoption.</p>
+        <p>This isn't another vendor relationship. This is a partner who sits on your side of the table.</p>
+        <div class="about-sig">
+          <div class="sig-name">Brent Krempges</div>
+          <div class="sig-title">Founder, OS Intelligence &nbsp;&middot;&nbsp; St. Louis, MO &nbsp;&middot;&nbsp; Brent.Krempges@gmail.com &nbsp;&middot;&nbsp; 417-619-6483</div>
         </div>
       </div>
-    </div>
-
-    <div class="about-credentials">
-      <div class="cred-item">
-        <div class="cred-val">12+</div>
-        <div class="cred-label"><strong>Years in Enterprise Technology</strong>Customer success leadership at scale — including roles at Gainsight</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-val">SMB</div>
-        <div class="cred-label"><strong>Dedicated to the Market Enterprise Forgot</strong>Built specifically for businesses that don't have a technology department</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-val">AI</div>
-        <div class="cred-label"><strong>AI-Native from Day One</strong>Modern tools built for how business works today, not retrofitted for a world that no longer exists</div>
-      </div>
-      <div class="cred-item">
-        <div class="cred-val">MO</div>
-        <div class="cred-label"><strong>Built with Midwest Work Ethic</strong>Straight talk, no runaround. If we can't build it right, we'll tell you before we start.</div>
+      <div class="about-cards">
+        <div class="about-card">
+          <h4>Family at the Core</h4>
+          <p>OS stands for Ozzy and Sully, Brent's two sons. This business exists because of them and for the kind of business owners who are building something worth passing on.</p>
+        </div>
+        <div class="about-card">
+          <h4>Midwest First</h4>
+          <p>Based in St. Louis, focused on helping Midwest businesses compete and win in a world that wasn't built for them.</p>
+        </div>
+        <div class="about-card">
+          <h4>15 Years at the Enterprise Level</h4>
+          <p>From early-stage startups to billion-dollar outcomes. We know how enterprise tools work from the inside and why they keep failing small business owners.</p>
+        </div>
+        <div class="about-card">
+          <h4>Son of a Small Business Owner</h4>
+          <p>Grew up in Southwest Missouri watching a small business run on grit and tools that were never quite built for the job. That shapes everything about how we approach this work.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
-
+ 
 <!-- CTA -->
 <section id="contact">
-  <h2 class="cta-headline">Ready to stop renting<br />someone else's vision?</h2>
-  <p class="cta-sub">Let's talk about what your business actually needs and build it together. No pitch deck. No sales process. Just a real conversation.</p>
-  <a href="/cdn-cgi/l/email-protection#abc9d9cec5dfebc4d8c2c5dfcec7c7c2cccec5c8ce85c8c4" class="cta-email"><span class="__cf_email__" data-cfemail="2a48584f445e6a455943445e4f4646434d4f44494f044945">[email&#160;protected]</span> →</a>
+  <span class="eyebrow">Get started</span>
+  <h2>Ready to stop renting<br/><em>someone else's system?</em></h2>
+  <p>No sales pitch. No demo deck. Just a real conversation about your business and whether we're the right fit.</p>
+  <a href="mailto:Brent.Krempges@gmail.com" class="cta-link">Brent.Krempges@gmail.com</a>
+  <p class="note">Or call directly: 417-619-6483 &nbsp;&middot;&nbsp; You'll hear from Brent, not a sales team.</p>
 </section>
-
-<!-- FOOTER -->
+ 
 <footer>
-  <div class="footer-logo"
+  <div class="footer-inner">
+    <a href="#" class="footer-logo">OS<span>.</span>Intelligence</a>
+    <p>© 2025 OS Intelligence LLC · St. Louis, MO</p>
+  </div>
+</footer>
+ 
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
+ 
