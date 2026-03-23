@@ -94,15 +94,27 @@
  
   /* HERO */
   #hero {
-    background: var(--parchment);
+    background-color: var(--parchment);
+    background-image: url('https://images.unsplash.com/photo-1569511166187-97c68e6b5f90?w=1400&q=80&fit=crop');
+    background-size: cover;
+    background-position: center 55%;
     padding: 80px 36px 72px;
     border-bottom: 1px solid var(--wheat);
+    position: relative;
+  }
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(237, 229, 216, 0.87);
+    pointer-events: none;
   }
  
   .hero-inner {
     max-width: 1060px; margin: 0 auto;
     display: grid; grid-template-columns: 1fr 300px;
     gap: 72px; align-items: center;
+    position: relative; z-index: 1;
   }
  
   .hero-h1 {
@@ -167,7 +179,6 @@
   }
  
   .outcome-card { background: var(--linen); padding: 30px 26px; }
-  .outcome-icon { font-size: 24px; margin-bottom: 12px; }
   .outcome-card h3 { font-size: 17px; margin-bottom: 8px; }
   .outcome-card p { font-size: 14px; color: var(--stone); line-height: 1.65; }
  
@@ -440,32 +451,26 @@
     </div>
     <div class="outcomes-grid fade">
       <div class="outcome-card">
-        <div class="outcome-icon">⏱</div>
         <h3>Time back for your team</h3>
         <p>When the tools match how your people actually work, the manual overhead disappears. Less chasing down information. Less double entry. Less rework.</p>
       </div>
       <div class="outcome-card">
-        <div class="outcome-icon">📋</div>
         <h3>Visibility into your operation</h3>
         <p>Know what's happening across your jobs, your finances, and your team without pulling it from five different places or waiting until month-end to find out.</p>
       </div>
       <div class="outcome-card">
-        <div class="outcome-icon">💰</div>
         <h3>Margins you can defend</h3>
         <p>Hidden cost overruns, billing delays, and approval bottlenecks eat margin silently. A system built for your operation surfaces these problems before they compound.</p>
       </div>
       <div class="outcome-card">
-        <div class="outcome-icon">🤝</div>
         <h3>A partner, not a vendor</h3>
         <p>One person who knows your business, answers when you call, and evolves the system as you grow. No tickets. No support queue. No getting passed around.</p>
       </div>
       <div class="outcome-card">
-        <div class="outcome-icon">📈</div>
         <h3>The leverage bigger companies have</h3>
         <p>Large companies run on custom-built internal tools that smaller businesses can't replicate on their own. Now you can have that same advantage without a full technology team.</p>
       </div>
       <div class="outcome-card">
-        <div class="outcome-icon">🏗</div>
         <h3>A system that grows with you</h3>
         <p>Off-the-shelf tools are built for a version of your business that doesn't exist. Yours is built from the ground up for how you work today and where you're headed.</p>
       </div>
