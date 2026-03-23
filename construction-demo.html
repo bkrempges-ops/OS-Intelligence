@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FieldOS — Construction Operations Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rust: #C94B1F;
+    --rust-light: #E05A2A;
+    --rust-dark: #9E3A15;
+    --charcoal: #1A1C1E;
+    --charcoal-mid: #252830;
+    --charcoal-light: #2E3138;
+    --steel: #3A3F4A;
+    --slate: #6B7280;
+    --silver: #9CA3AF;
+    --cream: #F5F0E8;
+    --cream-dim: #EDE8DC;
+    --white: #FFFFFF;
+    --green: #22C55E;
+    --yellow: #F59E0B;
+    --red: #EF4444;
+    --blue: #3B82F6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--charcoal);
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    overflow: hidden;
+    font-size: 14px;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--charcoal-mid);
+    border-right: 1px solid var(--steel);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+
+  .logo {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--steel);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--rust);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    color: white;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    color: var(--cream);
+  }
+
+  .logo-sub {
+    font-size: 9px;
+    color: var(--slate);
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+
+  .nav-section {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .nav-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--slate);
+    padding: 0 16px 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+    font-size: 13px;
+    color: var(--silver);
+    font-weight: 400;
+  }
+
+  .nav-item:hover { background: var(--charcoal-light); color: var(--cream); }
+  .nav-item.active { background: rgba(201,75,31,0.12); color: var(--cream); border-left-color: var(--rust); font-weight: 500; }
+
+  .nav-icon { width: 16px; height: 16px; opacity: 0.7; }
+  .nav-item.active .nav-icon, .nav-item:hover .nav-icon { opacity: 1; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--rust);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
+  .sidebar-bottom {
+    margin-top: auto;
+    padding: 16px;
+    border-top: 1px solid var(--steel);
+  }
+
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--rust);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .user-name { font-size: 12px; font-weight: 600; color: var(--cream); }
+  .user-role { font-size: 10px; color: var(--slate); }
+
+  /* MAIN */
+  .main {
+    margin-left: 220px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .topbar {
+    background: var(--charcoal-mid);
+    border-bottom: 1px solid var(--steel);
+    padding: 0 24px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .topbar-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.3px;
+  }
+
+  .project-picker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--charcoal-light);
+    border: 1px solid var(--steel);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--cream);
+    font-weight: 500;
+  }
+
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+  .topbar-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+  .btn {
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    font-family: 'Barlow', sans-serif;
+    letter-spacing: 0.2px;
+  }
+
+  .btn-primary { background: var(--rust); color: white; }
+  .btn-primary:hover { background: var(--rust-light); }
+  .btn-ghost { background: transparent; color: var(--silver); border: 1px solid var(--steel); }
+  .btn-ghost:hover { border-color: var(--silver); color: var(--cream); }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* KPI CARDS */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .kpi-card {
+    background: var(--charcoal-mid);
+    border: 1px solid var(--steel);
+    border-radius: 8px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--rust);
+  }
+
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.yellow::before { background: var(--yellow); }
+  .kpi-card.blue::before { background: var(--blue); }
+  .kpi-card.red::before { background: var(--red); }
+
+  .kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--slate); margin-bottom: 6px; }
+  .kpi-value { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 700; color: var(--cream); line-height: 1; }
+  .kpi-sub { font-size: 11px; color: var(--slate); margin-top: 4px; }
+  .kpi-change { font-size: 11px; font-weight: 600; margin-top: 4px; }
+  .kpi-change.up { color: var(--green); }
+  .kpi-change.down { color: var(--red); }
+  .kpi-change.warn { color: var(--yellow); }
+
+  /* GRID LAYOUT */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+
+  .card {
+    background: var(--charcoal-mid);
+    border: 1px solid var(--steel);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--steel);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .card-action { font-size: 11px; color: var(--rust); cursor: pointer; font-weight: 600; }
+  .card-action:hover { color: var(--rust-light); }
+
+  /* PROJECT TABLE */
+  .project-table { width: 100%; border-collapse: collapse; }
+  .project-table th {
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--slate);
+    border-bottom: 1px solid var(--steel);
+    background: var(--charcoal);
+  }
+
+  .project-table td {
+    padding: 11px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--cream);
+  }
+
+  .project-table tr:hover td { background: rgba(255,255,255,0.03); cursor: pointer; }
+  .project-table tr:last-child td { border-bottom: none; }
+
+  .project-name { font-weight: 600; }
+  .project-sub { font-size: 11px; color: var(--slate); margin-top: 2px; }
+
+  .progress-wrap { display: flex; align-items: center; gap: 10px; }
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--steel);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill { height: 100%; border-radius: 2px; background: var(--rust); }
+  .progress-fill.green { background: var(--green); }
+  .progress-fill.yellow { background: var(--yellow); }
+  .progress-pct { font-size: 12px; font-weight: 600; color: var(--silver); min-width: 32px; text-align: right; }
+
+  .status-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-on-track { background: rgba(34,197,94,0.12); color: #4ADE80; }
+  .tag-at-risk { background: rgba(245,158,11,0.12); color: #FCD34D; }
+  .tag-delayed { background: rgba(239,68,68,0.12); color: #FCA5A5; }
+  .tag-complete { background: rgba(59,130,246,0.12); color: #93C5FD; }
+
+  /* BUDGET CHART */
+  .budget-chart { padding: 16px; }
+  .budget-item { margin-bottom: 14px; }
+  .budget-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .budget-name { font-size: 12px; font-weight: 500; color: var(--silver); }
+  .budget-vals { font-size: 11px; color: var(--slate); }
+  .budget-amount { font-size: 12px; font-weight: 700; color: var(--cream); }
+  .budget-track {
+    height: 6px;
+    background: var(--steel);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .budget-used {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  /* ACTIVITY FEED */
+  .activity-feed { padding: 4px 0; }
+  .activity-item {
+    padding: 10px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .activity-item:last-child { border-bottom: none; }
+
+  .activity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .activity-text { font-size: 12px; line-height: 1.5; color: var(--silver); }
+  .activity-text strong { color: var(--cream); font-weight: 600; }
+  .activity-time { font-size: 10px; color: var(--slate); margin-top: 2px; }
+
+  /* OPEN ITEMS */
+  .item-row {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .item-row:hover { background: rgba(255,255,255,0.03); }
+  .item-row:last-child { border-bottom: none; }
+
+  .item-type {
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+  .type-rfi { background: rgba(59,130,246,0.15); color: #93C5FD; }
+  .type-co { background: rgba(201,75,31,0.15); color: #F97316; }
+  .type-sub { background: rgba(168,85,247,0.15); color: #C4B5FD; }
+  .type-doc { background: rgba(34,197,94,0.15); color: #86EFAC; }
+
+  .item-info { flex: 1; min-width: 0; }
+  .item-title { font-size: 12px; font-weight: 600; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item-detail { font-size: 10px; color: var(--slate); margin-top: 2px; }
+  .item-priority { font-size: 10px; font-weight: 600; }
+  .priority-high { color: var(--red); }
+  .priority-med { color: var(--yellow); }
+  .priority-low { color: var(--blue); }
+
+  /* WEATHER / CREW STRIP */
+  .strip { padding: 0 16px 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .strip-item {
+    background: var(--charcoal);
+    border: 1px solid var(--steel);
+    border-radius: 6px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .strip-val { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--cream); }
+  .strip-label { font-size: 10px; color: var(--slate); margin-top: 2px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* CREW TABLE */
+  .crew-list { padding: 4px 0; }
+  .crew-row {
+    padding: 9px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .crew-row:last-child { border-bottom: none; }
+  .crew-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--steel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--silver);
+    flex-shrink: 0;
+  }
+  .crew-name { font-size: 12px; font-weight: 600; color: var(--cream); }
+  .crew-role { font-size: 10px; color: var(--slate); }
+  .crew-hours { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--cream); }
+  .crew-status { font-size: 10px; font-weight: 600; }
+  .crew-status.clocked-in { color: var(--green); }
+  .crew-status.break { color: var(--yellow); }
+
+  /* OS INTEL BRAND */
+  .branded-badge {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--rust);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    z-index: 100;
+    text-transform: uppercase;
+  }
+
+  /* Scrollbar */
+  .content::-webkit-scrollbar { width: 5px; }
+  .content::-webkit-scrollbar-track { background: transparent; }
+  .content::-webkit-scrollbar-thumb { background: var(--steel); border-radius: 3px; }
+
+  /* Tab nav */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--steel);
+    background: var(--charcoal);
+    padding: 0 16px;
+  }
+  .tab {
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--slate);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+  }
+  .tab.active { color: var(--cream); border-bottom-color: var(--rust); }
+  .tab:hover:not(.active) { color: var(--silver); }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .kpi-card, .card { animation: fadeIn 0.3s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">OS</div>
+    <div>
+      <div class="logo-text">FieldOS</div>
+      <div class="logo-sub">Construction Ops</div>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Overview</div>
+    <div class="nav-item active" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 012.5 1h3A1.5 1.5 0 017 2.5v3A1.5 1.5 0 015.5 7h-3A1.5 1.5 0 011 5.5v-3zm8 0A1.5 1.5 0 0110.5 1h3A1.5 1.5 0 0115 2.5v3A1.5 1.5 0 0113.5 7h-3A1.5 1.5 0 019 5.5v-3zm-8 8A1.5 1.5 0 012.5 9h3A1.5 1.5 0 017 10.5v3A1.5 1.5 0 015.5 15h-3A1.5 1.5 0 011 13.5v-3zm8 0A1.5 1.5 0 0110.5 9h3A1.5 1.5 0 0115 10.5v3A1.5 1.5 0 0113.5 15h-3A1.5 1.5 0 019 13.5v-3z"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a.5.5 0 01.5.5v.793l.646-.647a.5.5 0 01.708.708l-1.5 1.5a.5.5 0 01-.708 0l-1.5-1.5a.5.5 0 01.708-.708l.646.647V1.5A.5.5 0 018 1zM3 4.5A1.5 1.5 0 014.5 3h7A1.5 1.5 0 0113 4.5v8a1.5 1.5 0 01-1.5 1.5h-7A1.5 1.5 0 013 12.5v-8zm1.5-.5a.5.5 0 00-.5.5v8a.5.5 0 00.5.5h7a.5.5 0 00.5-.5v-8a.5.5 0 00-.5-.5h-7z"/></svg>
+      Projects
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Field Ops</div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 100-6 3 3 0 000 6zM5.216 14A2.238 2.238 0 015 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 005 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/></svg>
+      Crew & Labor
+    </div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M8 16a2 2 0 002-2H6a2 2 0 002 2zm.995-14.901a1 1 0 10-1.99 0A5.002 5.002 0 003 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/></svg>
+      Daily Reports
+      <span class="nav-badge">3</span>
+    </div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2a2 2 0 00-2 2v8.01A2 2 0 002 14h5.5a.5.5 0 000-1H2a1 1 0 01-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 001 0V4a2 2 0 00-2-2H2z"/><path d="M16 12.5a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0zm-1.993-1.679a.5.5 0 00-.686.172l-1.17 1.95-.547-.547a.5.5 0 00-.708.708l.774.773a.75.75 0 001.174-.144l1.335-2.226a.5.5 0 00-.172-.686z"/></svg>
+      Submittals
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Financials</div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5.929 1.757a.5.5 0 00-.707 0L4.5 2.48l-.722-.723a.5.5 0 00-.707 0l-.5.5a.5.5 0 000 .707l.722.722-.722.722a.5.5 0 000 .707l.5.5a.5.5 0 00.707 0L4.5 5.115l.722.723a.5.5 0 00.707 0l.5-.5a.5.5 0 000-.707L5.707 3.91l.722-.722a.5.5 0 000-.707l-.5-.5z"/><path d="M8 1a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM6 3.5a2 2 0 114 0 2 2 0 01-4 0zm5.854 2.854a.5.5 0 00-.707-.707L9.5 7.293l-.646-.647a.5.5 0 00-.707.707l1 1a.5.5 0 00.707 0l2-2zM8 7a4.978 4.978 0 00-3.528 1.472A4.978 4.978 0 003 12h.5a.5.5 0 000-1 4 4 0 118 0 .5.5 0 000 1H12a4.978 4.978 0 00-1.472-3.528A4.978 4.978 0 008 7z"/></svg>
+      Budget & Costs
+    </div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M0 3a2 2 0 012-2h13a1 1 0 011 1v8a1 1 0 01-1 1h-1v1a2 2 0 01-2 2H2a2 2 0 01-2-2V3zm2-1a1 1 0 00-1 1v8h12V2H2z"/></svg>
+      Change Orders
+      <span class="nav-badge">7</span>
+    </div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.051zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/></svg>
+      Subcontractors
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Compliance</div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5.338 1.59a61.44 61.44 0 00-2.837.856.481.481 0 00-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 002.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 00.101.025.615.615 0 00.1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 002.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 00-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524z"/></svg>
+      Safety & QC
+    </div>
+    <div class="nav-item" onclick="setNav(this)">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="currentColor"><path d="M5 4a.5.5 0 000 1h6a.5.5 0 000-1H5zm-.5 2.5A.5.5 0 015 6h6a.5.5 0 010 1H5a.5.5 0 01-.5-.5zm0 2A.5.5 0 015 8h6a.5.5 0 010 1H5a.5.5 0 01-.5-.5zM3 2.5A2.5 2.5 0 015.5 0h5A2.5 2.5 0 0113 2.5v11a.5.5 0 01-.777.416L8 11.101l-4.223 2.815A.5.5 0 013 13.5v-11z"/></svg>
+      RFIs
+      <span class="nav-badge">5</span>
+    </div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="user-card">
+      <div class="avatar">MB</div>
+      <div>
+        <div class="user-name">Mike Bauer</div>
+        <div class="user-role">Project Manager</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title">Portfolio Overview</div>
+    <div class="project-picker" onclick="cyclePicker(this)">
+      <div class="status-dot"></div>
+      <span id="pickerLabel">Spiegelglass Construction</span>
+      <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 01.753 1.659l-4.796 5.48a1 1 0 01-1.506 0z"/></svg>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost">Export Report</button>
+      <button class="btn btn-primary">+ New Project</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">Active Projects</div>
+        <div class="kpi-value">8</div>
+        <div class="kpi-sub">2 preconstruction</div>
+        <div class="kpi-change up">↑ 2 from last quarter</div>
+      </div>
+      <div class="kpi-card yellow">
+        <div class="kpi-label">Portfolio Budget</div>
+        <div class="kpi-value">$42.8M</div>
+        <div class="kpi-sub">committed value</div>
+        <div class="kpi-change warn"> 3% over forecast</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">On Schedule</div>
+        <div class="kpi-value">6/8</div>
+        <div class="kpi-sub">projects on track</div>
+        <div class="kpi-change up">↑ 1 from last week</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">Open RFIs</div>
+        <div class="kpi-value">23</div>
+        <div class="kpi-sub">avg 4.2 days pending</div>
+        <div class="kpi-change down">↑ 5 new this week</div>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label">Crew on Site</div>
+        <div class="kpi-value">147</div>
+        <div class="kpi-sub">across all sites today</div>
+        <div class="kpi-change up">↑ 12 from yesterday</div>
+      </div>
+    </div>
+
+    <!-- PROJECT TABLE + OPEN ITEMS -->
+    <div class="grid-3-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Active Projects</div>
+          <span class="card-action">View All →</span>
+        </div>
+        <div class="tab-nav">
+          <div class="tab active">All Projects</div>
+          <div class="tab">At Risk</div>
+          <div class="tab">Preconstruction</div>
+        </div>
+        <table class="project-table">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Progress</th>
+              <th>Budget</th>
+              <th>Status</th>
+              <th>Due</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="rowClick(this)">
+              <td>
+                <div class="project-name">Clayton Medical Campus</div>
+                <div class="project-sub">Commercial · General Contractor</div>
+              </td>
+              <td>
+                <div class="progress-wrap">
+                  <div class="progress-bar"><div class="progress-fill green" style="width:68%"></div></div>
+                  <div class="progress-pct">68%</div>
+                </div>
+              </td>
+              <td>$12.4M</td>
+              <td><span class="status-tag tag-on-track">● On Track</span></td>
+              <td>Aug '25</td>
+            </tr>
+            <tr onclick="rowClick(this)">
+              <td>
+                <div class="project-name">Chesterfield Retail Center</div>
+                <div class="project-sub">Commercial · GC + Design-Build</div>
+              </td>
+              <td>
+                <div class="progress-wrap">
+                  <div class="progress-bar"><div class="progress-fill yellow" style="width:41%"></div></div>
+                  <div class="progress-pct">41%</div>
+                </div>
+              </td>
+              <td>$8.7M</td>
+              <td><span class="status-tag tag-at-risk">▲ At Risk</span></td>
+              <td>Nov '25</td>
+            </tr>
+            <tr onclick="rowClick(this)">
+              <td>
+                <div class="project-name">Webster Groves Townhomes</div>
+                <div class="project-sub">Residential · 24 units</div>
+              </td>
+              <td>
+                <div class="progress-wrap">
+                  <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
+                  <div class="progress-pct">88%</div>
+                </div>
+              </td>
+              <td>$6.2M</td>
+              <td><span class="status-tag tag-on-track">● On Track</span></td>
+              <td>Apr '25</td>
+            </tr>
+            <tr onclick="rowClick(this)">
+              <td>
+                <div class="project-name">Maplewood Industrial Build</div>
+                <div class="project-sub">Industrial · Warehouse + Office</div>
+              </td>
+              <td>
+                <div class="progress-wrap">
+                  <div class="progress-bar"><div class="progress-fill" style="width:22%"></div></div>
+                  <div class="progress-pct">22%</div>
+                </div>
+              </td>
+              <td>$9.1M</td>
+              <td><span class="status-tag tag-delayed"> Delayed</span></td>
+              <td>Feb '26</td>
+            </tr>
+            <tr onclick="rowClick(this)">
+              <td>
+                <div class="project-name">Ladue School Renovation</div>
+                <div class="project-sub">Public · LEED Certified</div>
+              </td>
+              <td>
+                <div class="progress-wrap">
+                  <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+                  <div class="progress-pct">100%</div>
+                </div>
+              </td>
+              <td>$4.3M</td>
+              <td><span class="status-tag tag-complete"> Complete</span></td>
+              <td>Mar '25</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Open Items</div>
+          <span class="card-action">40 total</span>
+        </div>
+        <div style="padding: 4px 0;">
+          <div class="item-row">
+            <div class="item-type type-rfi">RFI</div>
+            <div class="item-info">
+              <div class="item-title">Structural beam spec clarification</div>
+              <div class="item-detail">Clayton Medical · 3 days pending</div>
+            </div>
+            <div class="item-priority priority-high">HIGH</div>
+          </div>
+          <div class="item-row">
+            <div class="item-type type-co">CO</div>
+            <div class="item-info">
+              <div class="item-title">Scope change: HVAC addition</div>
+              <div class="item-detail">Chesterfield Retail · +$84,200</div>
+            </div>
+            <div class="item-priority priority-high">HIGH</div>
+          </div>
+          <div class="item-row">
+            <div class="item-type type-rfi">RFI</div>
+            <div class="item-info">
+              <div class="item-title">Electrical panel location confirm</div>
+              <div class="item-detail">Maplewood Industrial · 1 day</div>
+            </div>
+            <div class="item-priority priority-med">MED</div>
+          </div>
+          <div class="item-row">
+            <div class="item-type type-sub">SUB</div>
+            <div class="item-info">
+              <div class="item-title">Framing crew insurance expiring</div>
+              <div class="item-detail">Weber Steel · exp Apr 15</div>
+            </div>
+            <div class="item-priority priority-high">HIGH</div>
+          </div>
+          <div class="item-row">
+            <div class="item-type type-doc">DOC</div>
+            <div class="item-info">
+              <div class="item-title">Submittal: Roofing membrane</div>
+              <div class="item-detail">Webster Groves · awaiting GC</div>
+            </div>
+            <div class="item-priority priority-med">MED</div>
+          </div>
+          <div class="item-row">
+            <div class="item-type type-co">CO</div>
+            <div class="item-info">
+              <div class="item-title">Owner request: lobby upgrade</div>
+              <div class="item-detail">Clayton Medical · pending approval</div>
+            </div>
+            <div class="item-priority priority-low">LOW</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUDGET + ACTIVITY + CREW -->
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Budget Tracking — Top Projects</div>
+          <span class="card-action">Full Report →</span>
+        </div>
+        <div class="budget-chart">
+          <div class="budget-item">
+            <div class="budget-row">
+              <div class="budget-name">Clayton Medical Campus</div>
+              <div><span class="budget-amount">$8.4M</span> <span class="budget-vals">/ $12.4M</span></div>
+            </div>
+            <div class="budget-track"><div class="budget-used" style="width:68%;background:var(--green)"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-row">
+              <div class="budget-name">Chesterfield Retail</div>
+              <div><span class="budget-amount">$4.1M</span> <span class="budget-vals">/ $8.7M</span></div>
+            </div>
+            <div class="budget-track"><div class="budget-used" style="width:47%;background:var(--yellow)"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-row">
+              <div class="budget-name">Maplewood Industrial</div>
+              <div><span class="budget-amount">$2.8M</span> <span class="budget-vals">/ $9.1M —  tracking over</span></div>
+            </div>
+            <div class="budget-track"><div class="budget-used" style="width:31%;background:var(--red)"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-row">
+              <div class="budget-name">Webster Groves Townhomes</div>
+              <div><span class="budget-amount">$5.7M</span> <span class="budget-vals">/ $6.2M</span></div>
+            </div>
+            <div class="budget-track"><div class="budget-used" style="width:92%;background:var(--rust)"></div></div>
+          </div>
+          <div class="budget-item">
+            <div class="budget-row">
+              <div class="budget-name">Ladue School Renovation</div>
+              <div><span class="budget-amount">$4.3M</span> <span class="budget-vals">/ $4.3M </span></div>
+            </div>
+            <div class="budget-track"><div class="budget-used" style="width:100%;background:var(--blue)"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Today's Crew — Clayton Medical</div>
+          <div class="strip" style="padding:0;display:flex;gap:8px;align-items:center;">
+            <div style="font-size:11px;color:var(--slate)">32 on site</div>
+            <div style="font-size:11px;background:rgba(34,197,94,0.1);color:#4ADE80;padding:2px 8px;border-radius:4px;font-weight:600;">All Clocked In</div>
+          </div>
+        </div>
+        <div class="strip">
+          <div class="strip-item">
+            <div class="strip-val">72°F</div>
+            <div class="strip-label">Weather</div>
+          </div>
+          <div class="strip-item">
+            <div class="strip-val">32</div>
+            <div class="strip-label">On Site</div>
+          </div>
+          <div class="strip-item">
+            <div class="strip-val">4</div>
+            <div class="strip-label">Tasks Due</div>
+          </div>
+        </div>
+        <div class="crew-list">
+          <div class="crew-row">
+            <div class="crew-avatar">TM</div>
+            <div>
+              <div class="crew-name">Tom Meier</div>
+              <div class="crew-role">Foreman · Framing</div>
+            </div>
+            <div class="crew-status clocked-in">● Clocked In</div>
+            <div class="crew-hours">9.2h</div>
+          </div>
+          <div class="crew-row">
+            <div class="crew-avatar">JH</div>
+            <div>
+              <div class="crew-name">Jessica Hartmann</div>
+              <div class="crew-role">Superintendent</div>
+            </div>
+            <div class="crew-status clocked-in">● Clocked In</div>
+            <div class="crew-hours">8.5h</div>
+          </div>
+          <div class="crew-row">
+            <div class="crew-avatar">RP</div>
+            <div>
+              <div class="crew-name">Rafael Perez</div>
+              <div class="crew-role">Electrician · Sub</div>
+            </div>
+            <div class="crew-status break">● Break</div>
+            <div class="crew-hours">5.1h</div>
+          </div>
+          <div class="crew-row">
+            <div class="crew-avatar">KW</div>
+            <div>
+              <div class="crew-name">Kyle Weston</div>
+              <div class="crew-role">Concrete · Crew Lead</div>
+            </div>
+            <div class="crew-status clocked-in">● Clocked In</div>
+            <div class="crew-hours">7.8h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end content -->
+</main>
+
+<div class="branded-badge">Powered by OS Intelligence</div>
+
+<script>
+function setNav(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function rowClick(row) {
+  document.querySelectorAll('.project-table tr').forEach(r => r.style.background = '');
+  row.style.background = 'rgba(201,75,31,0.08)';
+}
+
+function cyclePicker(el) {
+  const companies = ['Spiegelglass Construction', 'BSI Constructors', 'ACME Constructors', 'Goodwin Brothers'];
+  const label = document.getElementById('pickerLabel');
+  let idx = companies.indexOf(label.textContent);
+  label.textContent = companies[(idx + 1) % companies.length];
+}
+
+// Animate progress bars on load
+window.addEventListener('load', () => {
+  document.querySelectorAll('.progress-fill, .budget-used').forEach(el => {
+    const w = el.style.width;
+    el.style.width = '0';
+    setTimeout(() => { el.style.transition = 'width 0.8s cubic-bezier(0.4,0,0.2,1)'; el.style.width = w; }, 100);
+  });
+});
+</script>
+</body>
+</html>

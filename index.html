@@ -279,8 +279,228 @@
     letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--stone); padding: 4px 10px;
   }
- 
-  /* ABOUT */
+
+  /* ─── DEMOS SECTION ─────────────────────────────────── */
+  #demos { background: var(--parchment); }
+
+  .demos-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+    margin-bottom: 56px;
+  }
+
+  .demos-intro-copy h2 { font-size: clamp(27px, 3vw, 38px); margin-bottom: 16px; }
+  .demos-intro-copy h2 em { font-style: italic; color: var(--clay); }
+  .demos-intro-copy p { font-size: 16px; color: var(--stone); line-height: 1.8; margin-bottom: 14px; }
+
+  .demos-context-box {
+    background: var(--linen);
+    border: 1px solid var(--wheat);
+    border-radius: 6px;
+    padding: 28px;
+  }
+
+  .demos-context-box .context-head {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--wheat);
+  }
+
+  .context-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--fog);
+  }
+  .context-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .context-icon {
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .context-text-head {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 3px;
+  }
+
+  .context-text-body {
+    font-size: 13px;
+    color: var(--stone);
+    line-height: 1.6;
+  }
+
+  /* Demo cards grid */
+  .demo-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--wheat);
+    border: 1px solid var(--wheat);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .demo-card {
+    background: var(--linen);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .demo-card-header {
+    padding: 26px 26px 20px;
+    border-bottom: 1px solid var(--wheat);
+    background: var(--parchment);
+  }
+
+  .demo-card-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: 8px;
+  }
+
+  .demo-card-header h3 {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .demo-card-header .demo-subtitle {
+    font-size: 13px;
+    color: var(--stone);
+    line-height: 1.5;
+  }
+
+  .demo-card-body {
+    padding: 20px 26px;
+    flex: 1;
+  }
+
+  .demo-personal-note {
+    background: var(--clay-pale);
+    border-left: 3px solid var(--clay);
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: var(--bark);
+    line-height: 1.55;
+    font-style: italic;
+  }
+
+  .demo-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 22px;
+  }
+
+  .demo-features li {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--stone);
+    line-height: 1.5;
+  }
+
+  .demo-features li .chk {
+    color: var(--clay);
+    font-size: 13px;
+    flex-shrink: 0;
+    line-height: 1.6;
+  }
+
+  .demo-card-footer {
+    padding: 18px 26px;
+    border-top: 1px solid var(--wheat);
+    background: var(--linen);
+  }
+
+  .demo-launch-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--forest);
+    color: var(--linen);
+    padding: 11px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background 0.2s;
+    width: 100%;
+  }
+  .demo-launch-btn:hover { background: var(--forest-mid); }
+
+  .demo-launch-btn .arrow {
+    font-size: 16px;
+    transition: transform 0.2s;
+  }
+  .demo-launch-btn:hover .arrow { transform: translateX(3px); }
+
+  /* Threat callout banner */
+  .threat-banner {
+    margin-top: 40px;
+    background: var(--forest);
+    border-radius: 6px;
+    padding: 28px 36px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .threat-banner-copy h3 {
+    font-size: 18px;
+    color: var(--linen);
+    margin-bottom: 7px;
+  }
+
+  .threat-banner-copy h3 em {
+    font-style: italic;
+    color: var(--clay-light);
+  }
+
+  .threat-banner-copy p {
+    font-size: 14px;
+    color: #6A8A74;
+    line-height: 1.65;
+    max-width: 580px;
+  }
+
+  .threat-banner-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--clay);
+    color: var(--linen);
+    padding: 11px 22px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .threat-banner-cta:hover { background: var(--clay-light); }
+
+  /* ─── ABOUT ──────────────────────────────────────────── */
   #about { background: var(--parchment); }
  
   .about-grid {
@@ -388,6 +608,9 @@
     .about-grid { grid-template-columns: 1fr; }
     .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
     nav .nav-links li:not(:last-child) { display: none; }
+    .demos-intro { grid-template-columns: 1fr; gap: 32px; }
+    .demo-cards { grid-template-columns: 1fr; }
+    .threat-banner { grid-template-columns: 1fr; gap: 20px; }
   }
 </style>
 </head>
@@ -401,6 +624,7 @@
       <li><a href="#outcomes">What You Get</a></li>
       <li><a href="#service">The Difference</a></li>
       <li><a href="#how">How It Works</a></li>
+      <li><a href="#demos">See It in Action</a></li>
       <li><a href="#about">About Us</a></li>
       <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
     </ul>
@@ -418,7 +642,7 @@
       </p>
       <div class="hero-actions">
         <a href="#contact" class="btn-primary">Start a Conversation →</a>
-        <a href="#service" class="btn-ghost">See how it works</a>
+        <a href="#demos" class="btn-ghost">See live demos</a>
       </div>
     </div>
     <div class="hero-aside">
@@ -494,24 +718,24 @@
         <div class="compare-col-head">What you buy today</div>
         <h3>Off-the-shelf tools</h3>
         <ul class="compare-list">
-          <li><span class="mk">✗</span>Built for the average customer in your industry, not you specifically</li>
-          <li><span class="mk">✗</span>You adapt your workflows to fit what the product allows</li>
-          <li><span class="mk">✗</span>Pay for capabilities you'll never use</li>
-          <li><span class="mk">✗</span>Support is automated, slow, and generic</li>
-          <li><span class="mk">✗</span>Annual price increases with no corresponding value to your business</li>
-          <li><span class="mk">✗</span>Roadmap decisions made for their biggest customers, not you</li>
+          <li><span class="mk"></span>Built for the average customer in your industry, not you specifically</li>
+          <li><span class="mk"></span>You adapt your workflows to fit what the product allows</li>
+          <li><span class="mk"></span>Pay for capabilities you'll never use</li>
+          <li><span class="mk"></span>Support is automated, slow, and generic</li>
+          <li><span class="mk"></span>Annual price increases with no corresponding value to your business</li>
+          <li><span class="mk"></span>Roadmap decisions made for their biggest customers, not you</li>
         </ul>
       </div>
       <div class="compare-col featured">
         <div class="compare-col-head">What OS Intelligence builds</div>
         <h3>Your operating system</h3>
         <ul class="compare-list">
-          <li><span class="mk">✓</span>Built from scratch around your specific workflows and team</li>
-          <li><span class="mk">✓</span>The system fits your operation, not the other way around</li>
-          <li><span class="mk">✓</span>You pay only for what your business actually needs</li>
-          <li><span class="mk">✓</span>One partner who knows your system and answers directly</li>
-          <li><span class="mk">✓</span>Transparent pricing: a fixed build fee and a monthly partnership</li>
-          <li><span class="mk">✓</span>System evolves as your business does, on your timeline</li>
+          <li><span class="mk"></span>Built from scratch around your specific workflows and team</li>
+          <li><span class="mk"></span>The system fits your operation, not the other way around</li>
+          <li><span class="mk"></span>You pay only for what your business actually needs</li>
+          <li><span class="mk"></span>One partner who knows your system and answers directly</li>
+          <li><span class="mk"></span>Transparent pricing: a fixed build fee and a monthly partnership</li>
+          <li><span class="mk"></span>System evolves as your business does, on your timeline</li>
         </ul>
       </div>
     </div>
@@ -524,19 +748,19 @@
       <div class="example-cols">
         <div class="example-col">
           <div class="example-col-head">What you get with Procore or Buildertrend</div>
-          <div class="feat-row"><span class="ic">✗</span>A platform built for every type of contractor, regardless of how you actually work</div>
-          <div class="feat-row"><span class="ic">✗</span>Dozens of modules (estimating, scheduling, RFIs, submittals) that most of your team will never touch</div>
-          <div class="feat-row"><span class="ic">✗</span>Months of setup, training, and change management to get your team using it</div>
-          <div class="feat-row"><span class="ic">✗</span>$20K to $50K or more per year with support routed through a ticketing system</div>
-          <div class="feat-row"><span class="ic">✗</span>When your workflow doesn't match the product, you change your workflow</div>
+          <div class="feat-row"><span class="ic"></span>A platform built for every type of contractor, regardless of how you actually work</div>
+          <div class="feat-row"><span class="ic"></span>Dozens of modules (estimating, scheduling, RFIs, submittals) that most of your team will never touch</div>
+          <div class="feat-row"><span class="ic"></span>Months of setup, training, and change management to get your team using it</div>
+          <div class="feat-row"><span class="ic"></span>$20K to $50K or more per year with support routed through a ticketing system</div>
+          <div class="feat-row"><span class="ic"></span>When your workflow doesn't match the product, you change your workflow</div>
         </div>
         <div class="example-col osi">
           <div class="example-col-head">What OS Intelligence builds for you</div>
-          <div class="feat-row"><span class="ic">✓</span>A job tracking and billing system built around how your PMs and field crews actually work</div>
-          <div class="feat-row"><span class="ic">✓</span>Only the capabilities your operation needs: job status, daily logs, change orders, and invoicing</div>
-          <div class="feat-row"><span class="ic">✓</span>Your team is using it within weeks because it matches what they already do</div>
-          <div class="feat-row"><span class="ic">✓</span>A fixed build cost plus a monthly partnership with one person who knows your system</div>
-          <div class="feat-row"><span class="ic">✓</span>When your operation evolves, the system evolves with it. Not on their roadmap. On yours.</div>
+          <div class="feat-row"><span class="ic"></span>A job tracking and billing system built around how your PMs and field crews actually work</div>
+          <div class="feat-row"><span class="ic"></span>Only the capabilities your operation needs: job status, daily logs, change orders, and invoicing</div>
+          <div class="feat-row"><span class="ic"></span>Your team is using it within weeks because it matches what they already do</div>
+          <div class="feat-row"><span class="ic"></span>A fixed build cost plus a monthly partnership with one person who knows your system</div>
+          <div class="feat-row"><span class="ic"></span>When your operation evolves, the system evolves with it. Not on their roadmap. On yours.</div>
         </div>
       </div>
     </div>
@@ -575,6 +799,132 @@
     </div>
   </div>
 </section>
+
+<hr class="divider" />
+
+<!-- DEMOS SECTION -->
+<section id="demos">
+  <div class="container">
+
+    <div class="demos-intro fade">
+      <div class="demos-intro-copy">
+        <span class="eyebrow">See it in action</span>
+        <h2>Three industries.<br/><em>Built from personal experience.</em></h2>
+        <p>These aren't arbitrary examples. They're the three industries I know best — as a customer, as a business observer, and as someone who has felt the friction firsthand.</p>
+        <p>I recently renovated my home and watched a capable contractor drown in spreadsheets and phone calls that a simple custom system could have handled. I drop my kids off at childcare every morning and see directors managing enrollment, billing, and compliance from a patchwork of tools that don't talk to each other. And I play golf — which means I've sat inside the operations of private clubs that still run tee sheets and event management in ways that haven't meaningfully changed in a decade.</p>
+        <p>The common thread isn't the industry. It's the pattern: <strong>capable, growing businesses being underserved by tools that were never really built for them.</strong> Technology is accelerating — AI, automation, real-time data — and the gap between businesses that have custom-built infrastructure and those that don't is widening every year. These three verticals aren't the limit of what we do. They're where the opportunity is most obvious to me personally.</p>
+      </div>
+      <div class="demos-context-box">
+        <div class="context-head">Why these three verticals</div>
+        <div class="context-item">
+          <div class="context-icon">Build</div>
+          <div>
+            <div class="context-text-head">Construction</div>
+            <div class="context-text-body">Renovated my home in 2024. Watched a great GC lose margin and time to manual tracking, missed change orders, and crew coordination that lived in text messages. The operational pain is real and the tools on the market either don't fit or cost more than the job warrants.</div>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-icon">Care</div>
+          <div>
+            <div class="context-text-head">Early Childhood Education</div>
+            <div class="context-text-body">My kids attend childcare. Directors are running compliance, billing, family communication, and room ratios across three different apps, none of which integrate with each other. It's one of the most relationship-driven businesses there is — and it runs like it's 2012.</div>
+          </div>
+        </div>
+        <div class="context-item">
+          <div class="context-icon">Care</div>
+          <div>
+            <div class="context-text-head">Golf &amp; Country Clubs</div>
+            <div class="context-text-body">I play golf regularly. Private clubs are member-experience businesses at their core, but most are running operations on legacy software that hasn't kept pace with member expectations. Tee sheets, dining, events, dues — the data exists, but no one's connecting it in a way that drives decisions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo cards -->
+    <div class="demo-cards fade">
+
+      <!-- Construction -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <div class="demo-card-tag">Construction</div>
+          <h3>FieldOS</h3>
+          <div class="demo-subtitle">A Procore-inspired operations platform for GCs in the $25–50M range who need real visibility without the enterprise price tag.</div>
+        </div>
+        <div class="demo-card-body">
+          <div class="demo-personal-note">"The contractor who renovated my house was excellent at the work. The business side — job tracking, change orders, crew time — was held together with spreadsheets and gut feel."</div>
+          <ul class="demo-features">
+            <li><span class="chk"></span>Portfolio dashboard with live project status, budget tracking, and schedule health</li>
+            <li><span class="chk"></span>Open items queue: RFIs, change orders, submittals, and subcontractor compliance in one view</li>
+            <li><span class="chk"></span>Crew roster with clock-in status, hours, and daily labor tracking by job</li>
+            <li><span class="chk"></span>Budget vs. actual by project with visual over/under indicators</li>
+          </ul>
+        </div>
+        <div class="demo-card-footer">
+          <a href="construction-demo.html" target="_blank" class="demo-launch-btn">
+            Launch Construction Demo <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Childcare -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <div class="demo-card-tag">Early Education</div>
+          <h3>NestOS</h3>
+          <div class="demo-subtitle">A Brightwheel/Tadpoles-inspired platform for childcare directors managing enrollment, ratios, billing, and family communication.</div>
+        </div>
+        <div class="demo-card-body">
+          <div class="demo-personal-note">"Every morning I drop off my kids and watch the director juggle three apps, a whiteboard, and a binder. She's running a complex operation and the tools aren't keeping up."</div>
+          <ul class="demo-features">
+            <li><span class="chk"></span>Live room ratio monitoring with compliance alerts before they become violations</li>
+            <li><span class="chk"></span>Real-time check-in/out feed with per-child activity logging</li>
+            <li><span class="chk"></span>Billing dashboard with payment status, overdue flags, and monthly revenue snapshot</li>
+            <li><span class="chk"></span>Family activity feed: meals, naps, photos, and direct messaging in one place</li>
+          </ul>
+        </div>
+        <div class="demo-card-footer">
+          <a href="childcare-demo.html" target="_blank" class="demo-launch-btn">
+            Launch Childcare Demo <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Golf -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <div class="demo-card-tag">Golf &amp; Country Clubs</div>
+          <h3>ClubOS</h3>
+          <div class="demo-subtitle">A ForeTees-inspired club operations platform that connects tee sheets, dining, events, member activity, and revenue into one view.</div>
+        </div>
+        <div class="demo-card-body">
+          <div class="demo-personal-note">"I've played at clubs where the pro still manages tee times by hand and the dining room doesn't know a member is on property until they walk in the door. There's no reason for that in 2025."</div>
+          <ul class="demo-features">
+            <li><span class="chk"></span>Live tee sheet with member/guest flags, cart assignments, and check-in status</li>
+            <li><span class="chk"></span>Event calendar with enrollment tracking across golf, dining, and courts</li>
+            <li><span class="chk"></span>Member activity dashboard with dues status and charge history</li>
+            <li><span class="chk"></span>Revenue by department: golf, dining, pro shop, courts, and dues — in one view</li>
+          </ul>
+        </div>
+        <div class="demo-card-footer">
+          <a href="golf-demo.html" target="_blank" class="demo-launch-btn">
+            Launch Club Demo <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Threat banner -->
+    <div class="threat-banner fade">
+      <div class="threat-banner-copy">
+        <h3>AI is coming for every one of these industries. <em>The question is which side of it you're on.</em></h3>
+        <p>The major enterprise platforms are integrating AI into their roadmaps — but they're doing it for their biggest customers first. For the $30M GC, the 60-child daycare, and the 400-member club, that investment isn't coming anytime soon. OS Intelligence closes that gap — bringing the same operational intelligence to businesses that have been told to wait their turn.</p>
+      </div>
+      <a href="#contact" class="threat-banner-cta">Let's talk about your business →</a>
+    </div>
+
+  </div>
+</section>
  
 <hr class="divider" />
  
@@ -595,13 +945,17 @@
         <p>This isn't another vendor relationship. This is a partner who sits on your side of the table.</p>
         <div class="about-sig">
           <div class="sig-name">Brent Krempges</div>
-          <div class="sig-title">Founder, OS Intelligence &nbsp;&middot;&nbsp; St. Louis, MO &nbsp;&middot;&nbsp; Brent.Krempges@gmail.com &nbsp;&middot;&nbsp; 417-619-6483</div>
+          <div class="sig-title">Founder, OS Intelligence &nbsp;&middot;&nbsp; St. Louis, MO &nbsp;&middot;&nbsp; brent@osintelligence.co &nbsp;&middot;&nbsp; 417-619-6483</div>
         </div>
       </div>
       <div class="about-cards">
         <div class="about-card">
           <h4>Family at the Core</h4>
-          <p>OS stands for Ozzy and Sully, Brent's two sons. This business exists because of them and for the kind of business owners who are building something worth passing on.</p>
+          <p>OS stands for Ozzy and Sully, Brent's two young sons. They're why this business exists — and why he understands the world his customers operate in. School drop-offs, home renovations, and weekend rounds of golf aren't just hobbies. They're where the ideas come from.</p>
+        </div>
+        <div class="about-card">
+          <h4>Seen It from the Customer Side</h4>
+          <p>Recent home renovation. Kids in childcare. Member at a local golf club. Brent brings firsthand experience as a customer of all three industries he's focused on — not just an outside observer with a deck.</p>
         </div>
         <div class="about-card">
           <h4>Midwest First</h4>
@@ -625,7 +979,7 @@
   <span class="eyebrow">Get started</span>
   <h2>Ready to stop renting<br/><em>someone else's system?</em></h2>
   <p>No sales pitch. No demo deck. Just a real conversation about your business and whether we're the right fit.</p>
-  <a href="mailto:Brent.Krempges@gmail.com" class="cta-link">Brent.Krempges@gmail.com</a>
+  <a href="mailto:brent@osintelligence.co" class="cta-link">brent@osintelligence.co</a>
   <p class="note">Or call directly: 417-619-6483 &nbsp;&middot;&nbsp; You'll hear from Brent, not a sales team.</p>
 </section>
  
@@ -646,4 +1000,3 @@
 </script>
 </body>
 </html>
- 

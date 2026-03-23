@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClubOS — Private Club Operations Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+ :root {
+ --forest: #1A3A2A;
+ --forest-mid: #1E4533;
+ --forest-light: #24573F;
+ --sage: #2D6A4F;
+ --sage-light: #40916C;
+ --mint: #95D5B2;
+ --mint-pale: #D8F3DC;
+ --gold: #C9A84C;
+ --gold-light: #E2C072;
+ --gold-pale: #FDF8EC;
+ --cream: #F8F4ED;
+ --cream-dark: #EDE9DE;
+ --white: #FFFFFF;
+ --charcoal: #1C1C1E;
+ --text-dark: #1A3A2A;
+ --text-mid: #2D6A4F;
+ --text-muted: #5A8C72;
+ --text-light: #7BA892;
+ --border: #D4E8DB;
+ --border-light: #E8F4EC;
+ --red: #C0392B;
+ --red-pale: #FDECEB;
+ --blue: #2E5FA3;
+ --blue-pale: #EAF0FB;
+ --amber: #D4851A;
+ --amber-pale: #FDF2E0;
+ }
+
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+
+ body {
+ font-family: 'Jost', sans-serif;
+ background: var(--cream);
+ color: var(--text-dark);
+ min-height: 100vh;
+ display: flex;
+ overflow: hidden;
+ font-size: 14px;
+ }
+
+ /* SIDEBAR */
+ .sidebar {
+ width: 240px;
+ flex-shrink: 0;
+ background: var(--forest);
+ display: flex;
+ flex-direction: column;
+ height: 100vh;
+ position: fixed;
+ left: 0;
+ top: 0;
+ }
+
+ /* decorative texture */
+ .sidebar::before {
+ content: '';
+ position: absolute;
+ inset: 0;
+ background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+ background-size: 20px 20px;
+ pointer-events: none;
+ }
+
+ .logo {
+ padding: 22px 20px 18px;
+ border-bottom: 1px solid rgba(255,255,255,0.1);
+ position: relative;
+ z-index: 1;
+ }
+
+ .logo-emblem {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ margin-bottom: 4px;
+ }
+
+ .logo-icon {
+ width: 38px;
+ height: 38px;
+ background: var(--gold);
+ border-radius: 8px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-family: 'Playfair Display', serif;
+ font-weight: 700;
+ font-size: 16px;
+ color: var(--forest);
+ flex-shrink: 0;
+ }
+
+ .logo-text {
+ font-family: 'Playfair Display', serif;
+ font-size: 20px;
+ font-weight: 700;
+ color: var(--cream);
+ letter-spacing: 0.5px;
+ }
+
+ .logo-sub {
+ font-size: 9px;
+ color: rgba(255,255,255,0.4);
+ font-weight: 500;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ padding-left: 50px;
+ }
+
+ .club-badge {
+ margin: 14px 16px;
+ background: rgba(201,168,76,0.12);
+ border: 1px solid rgba(201,168,76,0.3);
+ border-radius: 8px;
+ padding: 10px 14px;
+ cursor: pointer;
+ position: relative;
+ z-index: 1;
+ }
+
+ .club-badge-name {
+ font-family: 'Playfair Display', serif;
+ font-size: 13px;
+ font-weight: 600;
+ color: var(--gold-light);
+ }
+
+ .club-badge-sub { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+ .nav-section { padding: 8px 0; position: relative; z-index: 1; }
+
+ .nav-label {
+ font-size: 9px;
+ font-weight: 600;
+ letter-spacing: 2px;
+ text-transform: uppercase;
+ color: rgba(255,255,255,0.3);
+ padding: 0 18px 6px;
+ }
+
+ .nav-item {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ padding: 9px 18px;
+ cursor: pointer;
+ transition: all 0.15s;
+ font-size: 13px;
+ color: rgba(255,255,255,0.55);
+ font-weight: 400;
+ letter-spacing: 0.2px;
+ position: relative;
+ }
+
+ .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
+ .nav-item.active { background: rgba(201,168,76,0.12); color: var(--gold-light); font-weight: 600; }
+
+ .nav-item.active::after {
+ content: '';
+ position: absolute;
+ right: 0; top: 25%; bottom: 25%;
+ width: 3px;
+ background: var(--gold);
+ border-radius: 2px 0 0 2px;
+ }
+
+ .nav-icon { font-size: 14px; opacity: 0.8; }
+
+ .nav-badge {
+ margin-left: auto;
+ background: rgba(201,168,76,0.2);
+ color: var(--gold);
+ font-size: 10px;
+ font-weight: 700;
+ padding: 1px 7px;
+ border-radius: 8px;
+ border: 1px solid rgba(201,168,76,0.3);
+ }
+
+ .sidebar-footer {
+ margin-top: auto;
+ padding: 14px 16px;
+ border-top: 1px solid rgba(255,255,255,0.08);
+ position: relative;
+ z-index: 1;
+ }
+
+ .user-row { display: flex; align-items: center; gap: 10px; }
+ .avatar {
+ width: 34px;
+ height: 34px;
+ border-radius: 50%;
+ background: var(--gold);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 12px;
+ font-weight: 700;
+ color: var(--forest);
+ flex-shrink: 0;
+ font-family: 'Playfair Display', serif;
+ }
+
+ .user-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); }
+ .user-role { font-size: 10px; color: rgba(255,255,255,0.35); }
+
+ /* MAIN */
+ .main { margin-left: 240px; flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+ .topbar {
+ background: white;
+ border-bottom: 1px solid var(--border);
+ padding: 0 26px;
+ height: 56px;
+ display: flex;
+ align-items: center;
+ gap: 16px;
+ flex-shrink: 0;
+ }
+
+ .topbar-title {
+ font-family: 'Playfair Display', serif;
+ font-size: 19px;
+ font-weight: 600;
+ color: var(--text-dark);
+ }
+
+ .weather-chip {
+ display: flex;
+ align-items: center;
+ gap: 6px;
+ background: var(--mint-pale);
+ border: 1px solid var(--border);
+ padding: 5px 12px;
+ border-radius: 6px;
+ font-size: 12px;
+ font-weight: 600;
+ color: var(--text-mid);
+ }
+
+ .topbar-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+
+ .btn {
+ padding: 7px 16px;
+ border-radius: 6px;
+ font-size: 12px;
+ font-weight: 600;
+ cursor: pointer;
+ border: none;
+ transition: all 0.15s;
+ font-family: 'Jost', sans-serif;
+ letter-spacing: 0.3px;
+ }
+
+ .btn-gold { background: var(--gold); color: var(--forest); }
+ .btn-gold:hover { background: var(--gold-light); }
+ .btn-outline { background: transparent; color: var(--text-mid); border: 1px solid var(--border); }
+ .btn-outline:hover { border-color: var(--sage); color: var(--sage); }
+
+ .content {
+ flex: 1;
+ overflow-y: auto;
+ padding: 22px 26px;
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+ }
+
+ /* KPI */
+ .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+ .kpi-card {
+ background: white;
+ border: 1px solid var(--border);
+ border-radius: 10px;
+ padding: 14px 16px;
+ position: relative;
+ overflow: hidden;
+ transition: box-shadow 0.2s;
+ }
+
+ .kpi-card:hover { box-shadow: 0 4px 16px rgba(26,58,42,0.1); }
+
+ .kpi-card::after {
+ content: '';
+ position: absolute;
+ bottom: 0; left: 0; right: 0;
+ height: 3px;
+ background: var(--sage);
+ border-radius: 0 0 10px 10px;
+ }
+
+ .kpi-card.gold::after { background: var(--gold); }
+ .kpi-card.red::after { background: var(--red); }
+ .kpi-card.blue::after { background: var(--blue); }
+ .kpi-card.amber::after { background: var(--amber); }
+
+ .kpi-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+ .kpi-value { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--text-dark); line-height: 1; }
+ .kpi-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+ .kpi-badge {
+ display: inline-block;
+ margin-top: 5px;
+ font-size: 10px;
+ font-weight: 600;
+ padding: 2px 8px;
+ border-radius: 4px;
+ }
+ .badge-green { background: #E8F8EF; color: #166534; }
+ .badge-amber { background: var(--amber-pale); color: #9A4E0A; }
+ .badge-red { background: var(--red-pale); color: #9B1C1C; }
+
+ /* GRID */
+ .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+ .grid-3-1 { display: grid; grid-template-columns: 1.7fr 1fr; gap: 16px; }
+
+ .card {
+ background: white;
+ border: 1px solid var(--border);
+ border-radius: 10px;
+ overflow: hidden;
+ }
+
+ .card-header {
+ padding: 14px 18px;
+ border-bottom: 1px solid var(--border-light);
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ background: #FAFCFA;
+ }
+
+ .card-title {
+ font-family: 'Playfair Display', serif;
+ font-size: 15px;
+ font-weight: 600;
+ color: var(--text-dark);
+ }
+
+ .card-action { font-size: 11px; color: var(--sage); cursor: pointer; font-weight: 600; letter-spacing: 0.3px; }
+
+ /* TEE SHEET */
+ .tee-sheet { padding: 0; }
+
+ .tee-header {
+ display: grid;
+ grid-template-columns: 70px 1fr 70px 60px 60px 80px;
+ padding: 8px 18px;
+ font-size: 9px;
+ font-weight: 700;
+ letter-spacing: 1.2px;
+ text-transform: uppercase;
+ color: var(--text-light);
+ border-bottom: 1px solid var(--border-light);
+ background: var(--cream);
+ }
+
+ .tee-row {
+ display: grid;
+ grid-template-columns: 70px 1fr 70px 60px 60px 80px;
+ padding: 10px 18px;
+ align-items: center;
+ border-bottom: 1px solid #F5FAF7;
+ cursor: pointer;
+ transition: background 0.1s;
+ font-size: 13px;
+ }
+
+ .tee-row:hover { background: #F5FAF7; }
+ .tee-row:last-child { border-bottom: none; }
+ .tee-row.highlight { background: rgba(201,168,76,0.05); }
+
+ .tee-time { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600; color: var(--text-dark); }
+ .tee-time.next { color: var(--gold); }
+
+ .player-names { display: flex; flex-wrap: wrap; gap: 4px; }
+ .player-chip {
+ background: var(--mint-pale);
+ border: 1px solid var(--border);
+ padding: 2px 8px;
+ border-radius: 12px;
+ font-size: 11px;
+ font-weight: 600;
+ color: var(--text-mid);
+ }
+
+ .player-chip.guest { background: var(--gold-pale); border-color: rgba(201,168,76,0.3); color: #7A6020; }
+ .tee-holes { font-size: 12px; color: var(--text-muted); }
+ .tee-cart { font-size: 11px; color: var(--text-light); }
+
+ .tee-status-tag {
+ font-size: 10px;
+ font-weight: 700;
+ padding: 3px 8px;
+ border-radius: 4px;
+ text-align: center;
+ }
+ .status-open { background: var(--mint-pale); color: #166534; border: 1px solid var(--border); }
+ .status-full { background: #F3F4F6; color: #9CA3AF; border: 1px solid #E5E7EB; }
+ .status-checked { background: #EAF0FB; color: #1E40AF; border: 1px solid #BFDBFE; }
+ .status-hold { background: var(--amber-pale); color: #9A4E0A; border: 1px solid #FCD34D; }
+
+ .add-players {
+ color: var(--text-light);
+ font-size: 11px;
+ cursor: pointer;
+ font-style: italic;
+ }
+
+ /* EVENT LIST */
+ .event-list { padding: 4px 0; }
+ .event-item {
+ padding: 10px 18px;
+ display: flex;
+ gap: 12px;
+ align-items: flex-start;
+ border-bottom: 1px solid #F5FAF7;
+ cursor: pointer;
+ transition: background 0.1s;
+ }
+ .event-item:hover { background: #F5FAF7; }
+ .event-item:last-child { border-bottom: none; }
+
+ .event-date {
+ width: 38px;
+ text-align: center;
+ flex-shrink: 0;
+ }
+ .event-month { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--text-light); letter-spacing: 0.5px; }
+ .event-day { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--text-dark); line-height: 1; }
+
+ .event-info { flex: 1; }
+ .event-name { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+ .event-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+ .event-enrolled { font-size: 11px; font-weight: 600; color: var(--sage); margin-top: 3px; }
+
+ .event-type-dot {
+ width: 8px;
+ height: 8px;
+ border-radius: 50%;
+ margin-top: 5px;
+ flex-shrink: 0;
+ }
+ .dot-golf { background: var(--sage); }
+ .dot-dining { background: var(--gold); }
+ .dot-tennis { background: var(--blue); }
+ .dot-social { background: var(--amber); }
+
+ /* MEMBER ACTIVITY */
+ .member-list { padding: 4px 0; }
+ .member-row {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ padding: 9px 18px;
+ border-bottom: 1px solid #F5FAF7;
+ cursor: pointer;
+ transition: background 0.1s;
+ }
+ .member-row:hover { background: #F5FAF7; }
+ .member-row:last-child { border-bottom: none; }
+
+ .m-avatar {
+ width: 32px;
+ height: 32px;
+ border-radius: 50%;
+ background: var(--mint-pale);
+ border: 1.5px solid var(--border);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 11px;
+ font-weight: 700;
+ color: var(--text-mid);
+ flex-shrink: 0;
+ font-family: 'Playfair Display', serif;
+ }
+
+ .m-name { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+ .m-detail { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+ .m-amount { margin-left: auto; font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 600; color: var(--text-dark); }
+ .m-activity { font-size: 10px; color: var(--text-light); margin-top: 2px; text-align: right; }
+
+ /* REVENUE BARS */
+ .revenue-section { padding: 14px 18px; }
+ .rev-item { margin-bottom: 12px; }
+ .rev-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+ .rev-label { font-size: 12px; font-weight: 600; color: var(--text-mid); }
+ .rev-amount { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 600; color: var(--text-dark); }
+ .rev-bar { height: 5px; background: var(--border-light); border-radius: 3px; overflow: hidden; }
+ .rev-fill { height: 100%; border-radius: 3px; }
+
+ .branded-badge {
+ position: fixed;
+ bottom: 20px;
+ right: 20px;
+ background: var(--gold);
+ color: var(--forest);
+ font-family: 'Playfair Display', serif;
+ font-size: 11px;
+ font-weight: 700;
+ padding: 7px 14px;
+ border-radius: 4px;
+ z-index: 100;
+ box-shadow: 0 4px 12px rgba(201,168,76,0.3);
+ letter-spacing: 0.3px;
+ }
+
+ .content::-webkit-scrollbar { width: 5px; }
+ .content::-webkit-scrollbar-track { background: transparent; }
+ .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+ @keyframes slideUp {
+ from { opacity: 0; transform: translateY(10px); }
+ to { opacity: 1; transform: none; }
+ }
+ .kpi-card, .card { animation: slideUp 0.3s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+ <div class="logo">
+ <div class="logo-emblem">
+ <div class="logo-icon">C</div>
+ <div class="logo-text">ClubOS</div>
+ </div>
+ <div class="logo-sub">Private Club Platform</div>
+ </div>
+
+ <div class="club-badge" onclick="cycleClub(this)">
+ <div class="club-badge-name" id="clubName">Bellerive Country Club</div>
+ <div class="club-badge-sub">St. Louis, MO — Switch Club ▾</div>
+ </div>
+
+ <div class="nav-section">
+ <div class="nav-label">Overview</div>
+ <div class="nav-item active" onclick="setNav(this)">
+ Dashboard
+ </div>
+ <div class="nav-item" onclick="setNav(this)">
+ Tee Sheet
+ </div>
+ </div>
+
+ <div class="nav-section">
+ <div class="nav-label">Reservations</div>
+ <div class="nav-item" onclick="setNav(this)">
+ Courts
+ </div>
+ <div class="nav-item" onclick="setNav(this)">
+ Dining
+ <span class="nav-badge">12</span>
+ </div>
+ <div class="nav-item" onclick="setNav(this)">
+ Pool & Fitness
+ </div>
+ <div class="nav-item" onclick="setNav(this)">
+ Events
+ <span class="nav-badge">3</span>
+ </div>
+ </div>
+
+ <div class="nav-section">
+ <div class="nav-label">Members</div>
+ <div class="nav-item" onclick="setNav(this)">
+ Member Directory
+ </div>
+ <div class="nav-item" onclick="setNav(this)">
+ Member Dues
+ </div>
+ <div class="nav-item" onclick="setNav(this)">
+ Handicaps & Stats
+ </div>
+ </div>
+
+ <div class="nav-section">
+ <div class="nav-label">Operations</div>
+ <div class="nav-item" onclick="setNav(this)">
+ Reports
+ </div>
+ <div class="nav-item" onclick="setNav(this)">
+ Course Conditions
+ </div>
+ <div class="nav-item" onclick="setNav(this)">
+ Pro Shop POS
+ </div>
+ </div>
+
+ <div class="sidebar-footer">
+ <div class="user-row">
+ <div class="avatar">TW</div>
+ <div>
+ <div class="user-name">Tom Walsh</div>
+ <div class="user-role">Head Golf Professional</div>
+ </div>
+ </div>
+ </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+ <div class="topbar">
+ <div class="topbar-title">Operations Dashboard</div>
+ <div class="weather-chip">
+ 74°F · Light Breeze · Ideal Conditions
+ </div>
+ <div class="topbar-actions">
+ <button class="btn btn-outline">Course Conditions ↗</button>
+ <button class="btn btn-gold">+ Block Tee Times</button>
+ </div>
+ </div>
+
+ <div class="content">
+
+ <!-- KPI ROW -->
+ <div class="kpi-row">
+ <div class="kpi-card gold">
+ <div class="kpi-label">Rounds Today</div>
+ <div class="kpi-value">84</div>
+ <div class="kpi-sub">of 96 tee times filled</div>
+ <div class="kpi-badge badge-green">↑ 12% vs last Monday</div>
+ </div>
+ <div class="kpi-card">
+ <div class="kpi-label">Members On Property</div>
+ <div class="kpi-value">63</div>
+ <div class="kpi-sub">golf + dining + courts</div>
+ <div class="kpi-badge badge-green">Peak: 2–4 PM</div>
+ </div>
+ <div class="kpi-card amber">
+ <div class="kpi-label">Dining Reservations</div>
+ <div class="kpi-value">38</div>
+ <div class="kpi-sub">covers tonight</div>
+ <div class="kpi-badge badge-amber">3 large parties</div>
+ </div>
+ <div class="kpi-card red">
+ <div class="kpi-label">Open Tee Times</div>
+ <div class="kpi-value">12</div>
+ <div class="kpi-sub">remaining today</div>
+ <div class="kpi-badge badge-red">6 after 3 PM</div>
+ </div>
+ <div class="kpi-card blue">
+ <div class="kpi-label">Monthly Dues Collected</div>
+ <div class="kpi-value">$148K</div>
+ <div class="kpi-sub">of $162K total</div>
+ <div class="kpi-badge badge-amber">8 outstanding</div>
+ </div>
+ </div>
+
+ <!-- TEE SHEET + EVENTS -->
+ <div class="grid-3-1">
+ <div class="card">
+ <div class="card-header">
+ <div class="card-title">Today's Tee Sheet</div>
+ <div style="display:flex;gap:10px;align-items:center;">
+ <span style="font-size:11px;color:var(--text-muted)">Mar 23 · 18-Hole Course</span>
+ <span class="card-action">Full Sheet →</span>
+ </div>
+ </div>
+ <div class="tee-sheet">
+ <div class="tee-header">
+ <div>Time</div>
+ <div>Players</div>
+ <div>Holes</div>
+ <div>Carts</div>
+ <div>HCP</div>
+ <div>Status</div>
+ </div>
+ <div class="tee-row">
+ <div class="tee-time">7:00 AM</div>
+ <div class="player-names">
+ <div class="player-chip">R. Henderson</div>
+ <div class="player-chip">M. Clarke</div>
+ <div class="player-chip">W. Ashby</div>
+ </div>
+ <div class="tee-holes">18</div>
+ <div class="tee-cart">2 carts</div>
+ <div class="tee-cart">8.2</div>
+ <div class="tee-status-tag status-checked"> Checked In</div>
+ </div>
+ <div class="tee-row">
+ <div class="tee-time">7:08 AM</div>
+ <div class="player-names">
+ <div class="player-chip">J. Patterson</div>
+ <div class="player-chip">S. Nguyen</div>
+ <div class="player-chip">Guest</div>
+ <div class="player-chip guest">D. Miller*</div>
+ </div>
+ <div class="tee-holes">18</div>
+ <div class="tee-cart">2 carts</div>
+ <div class="tee-cart">12.1</div>
+ <div class="tee-status-tag status-checked"> Checked In</div>
+ </div>
+ <div class="tee-row highlight">
+ <div class="tee-time next">8:40 AM </div>
+ <div class="player-names">
+ <div class="player-chip">C. Weston</div>
+ <div class="player-chip">T. Greer</div>
+ <div class="player-chip">B. Callahan</div>
+ <div class="player-chip">A. Pruitt</div>
+ </div>
+ <div class="tee-holes">18</div>
+ <div class="tee-cart">2 carts</div>
+ <div class="tee-cart">6.5</div>
+ <div class="tee-status-tag status-hold"> Member Hold</div>
+ </div>
+ <div class="tee-row">
+ <div class="tee-time">9:00 AM</div>
+ <div class="player-names">
+ <div class="player-chip">L. Donovan</div>
+ <div class="player-chip">P. Whitmore</div>
+ <div class="add-players">+ Add players...</div>
+ </div>
+ <div class="tee-holes">9</div>
+ <div class="tee-cart">1 cart</div>
+ <div class="tee-cart">18.4</div>
+ <div class="tee-status-tag status-open">Open (2)</div>
+ </div>
+ <div class="tee-row">
+ <div class="tee-time">9:16 AM</div>
+ <div class="player-names">
+ <div class="add-players">— Available —</div>
+ </div>
+ <div class="tee-holes">—</div>
+ <div class="tee-cart">—</div>
+ <div class="tee-cart">—</div>
+ <div class="tee-status-tag status-open">Open (4)</div>
+ </div>
+ <div class="tee-row">
+ <div class="tee-time">10:00 AM</div>
+ <div class="player-names">
+ <div class="player-chip">Men's 18-Hole Assoc.</div>
+ </div>
+ <div class="tee-holes">18</div>
+ <div class="tee-cart">Shotgun</div>
+ <div class="tee-cart">Varies</div>
+ <div class="tee-status-tag status-full">Blocked — Event</div>
+ </div>
+ <div class="tee-row">
+ <div class="tee-time">2:00 PM</div>
+ <div class="player-names">
+ <div class="player-chip">E. Stafford</div>
+ <div class="player-chip">R. Banks</div>
+ <div class="player-chip">K. Russo</div>
+ </div>
+ <div class="tee-holes">18</div>
+ <div class="tee-cart">2 carts</div>
+ <div class="tee-cart">14.7</div>
+ <div class="tee-status-tag status-open">Confirmed</div>
+ </div>
+ </div>
+ </div>
+
+ <div class="card">
+ <div class="card-header">
+ <div class="card-title">Upcoming Events</div>
+ <span class="card-action">All Events →</span>
+ </div>
+ <div class="event-list">
+ <div class="event-item">
+ <div class="event-type-dot dot-golf"></div>
+ <div class="event-date">
+ <div class="event-month">Mar</div>
+ <div class="event-day">28</div>
+ </div>
+ <div class="event-info">
+ <div class="event-name">Spring Invitational</div>
+ <div class="event-detail">18-hole stroke play · Shotgun 8 AM</div>
+ <div class="event-enrolled">44 / 60 registered</div>
+ </div>
+ </div>
+ <div class="event-item">
+ <div class="event-type-dot dot-dining"></div>
+ <div class="event-date">
+ <div class="event-month">Apr</div>
+ <div class="event-day">4</div>
+ </div>
+ <div class="event-info">
+ <div class="event-name">Wine & Dine Pairing Night</div>
+ <div class="event-detail">Dining Room · Reservation required</div>
+ <div class="event-enrolled">28 / 40 registered</div>
+ </div>
+ </div>
+ <div class="event-item">
+ <div class="event-type-dot dot-tennis"></div>
+ <div class="event-date">
+ <div class="event-month">Apr</div>
+ <div class="event-day">6</div>
+ </div>
+ <div class="event-info">
+ <div class="event-name">Mixed Doubles Tournament</div>
+ <div class="event-detail">Courts 1–4 · All levels welcome</div>
+ <div class="event-enrolled">16 / 32 registered</div>
+ </div>
+ </div>
+ <div class="event-item">
+ <div class="event-type-dot dot-golf"></div>
+ <div class="event-date">
+ <div class="event-month">Apr</div>
+ <div class="event-day">12</div>
+ </div>
+ <div class="event-info">
+ <div class="event-name">Member–Guest Golf Classic</div>
+ <div class="event-detail">2-day event · Cart included</div>
+ <div class="event-enrolled">52 / 80 registered</div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <!-- MEMBER ACTIVITY + REVENUE -->
+ <div class="grid-2">
+ <div class="card">
+ <div class="card-header">
+ <div class="card-title">Member Activity — Today</div>
+ <span class="card-action">Member Directory →</span>
+ </div>
+ <div class="member-list">
+ <div class="member-row">
+ <div class="m-avatar">RH</div>
+ <div>
+ <div class="m-name">Robert Henderson</div>
+ <div class="m-detail">Full Golf Membership · HCP 8.2</div>
+ </div>
+ <div>
+ <div class="m-amount">$84</div>
+ <div class="m-activity">Greens fee · 7:00 AM</div>
+ </div>
+ </div>
+ <div class="member-row">
+ <div class="m-avatar">JP</div>
+ <div>
+ <div class="m-name">James Patterson</div>
+ <div class="m-detail">Exec. Golf + Dining · HCP 12.1</div>
+ </div>
+ <div>
+ <div class="m-amount">$184</div>
+ <div class="m-activity">Golf + lunch reservation</div>
+ </div>
+ </div>
+ <div class="member-row">
+ <div class="m-avatar">CW</div>
+ <div>
+ <div class="m-name">Catherine Weston</div>
+ <div class="m-detail">Family Membership · Tennnis</div>
+ </div>
+ <div>
+ <div class="m-amount">$45</div>
+ <div class="m-activity">Court 2 · 10:30 AM</div>
+ </div>
+ </div>
+ <div class="member-row">
+ <div class="m-avatar">LD</div>
+ <div>
+ <div class="m-name">Liam Donovan</div>
+ <div class="m-detail">Senior Golf Membership</div>
+ </div>
+ <div>
+ <div class="m-amount">$62</div>
+ <div class="m-activity">9 holes + cart · 9:00 AM</div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <div class="card">
+ <div class="card-header">
+ <div class="card-title">Revenue by Department — March</div>
+ <span class="card-action">Full Report →</span>
+ </div>
+ <div class="revenue-section">
+ <div class="rev-item">
+ <div class="rev-row">
+ <div class="rev-label"> Golf Operations</div>
+ <div class="rev-amount">$42,800</div>
+ </div>
+ <div class="rev-bar"><div class="rev-fill" style="width:88%;background:var(--sage)"></div></div>
+ </div>
+ <div class="rev-item">
+ <div class="rev-row">
+ <div class="rev-label"> Dining & Bar</div>
+ <div class="rev-amount">$28,400</div>
+ </div>
+ <div class="rev-bar"><div class="rev-fill" style="width:58%;background:var(--gold)"></div></div>
+ </div>
+ <div class="rev-item">
+ <div class="rev-row">
+ <div class="rev-label"> Member Dues</div>
+ <div class="rev-amount">$148,200</div>
+ </div>
+ <div class="rev-bar"><div class="rev-fill" style="width:91%;background:var(--forest-light)"></div></div>
+ </div>
+ <div class="rev-item">
+ <div class="rev-row">
+ <div class="rev-label"> Courts & Fitness</div>
+ <div class="rev-amount">$8,600</div>
+ </div>
+ <div class="rev-bar"><div class="rev-fill" style="width:18%;background:var(--blue)"></div></div>
+ </div>
+ <div class="rev-item">
+ <div class="rev-row">
+ <div class="rev-label"> Pro Shop</div>
+ <div class="rev-amount">$14,200</div>
+ </div>
+ <div class="rev-bar"><div class="rev-fill" style="width:29%;background:var(--amber)"></div></div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ </div>
+</main>
+
+<div class="branded-badge">Powered by OS Intelligence</div>
+
+<script>
+function setNav(el) {
+ document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+ el.classList.add('active');
+}
+
+function cycleClub(el) {
+ const clubs = ['Bellerive Country Club', 'Sunset Hills CC', 'Old Warson Country Club', 'Greenbriar Hills CC'];
+ const nameEl = document.getElementById('clubName');
+ let idx = clubs.indexOf(nameEl.textContent);
+ nameEl.textContent = clubs[(idx + 1) % clubs.length];
+}
+
+window.addEventListener('load', () => {
+ document.querySelectorAll('.rev-fill').forEach(el => {
+ const w = el.style.width;
+ el.style.width = '0';
+ setTimeout(() => { el.style.transition = 'width 0.9s cubic-bezier(0.4,0,0.2,1)'; el.style.width = w; }, 150);
+ });
+});
+</script>
+</body>
+</html>
